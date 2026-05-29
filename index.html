@@ -7,13 +7,9 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0ebe3;color:#2c1f0e;height:100vh;display:flex;flex-direction:column;overflow:hidden}
-#header{padding:10px 16px;background:#faf7f2;border-bottom:1px solid rgba(80,55,30,0.15);flex-shrink:0;display:flex;align-items:center;gap:12px}
-#header div{flex:1}
+#header{padding:10px 16px;background:#faf7f2;border-bottom:1px solid rgba(80,55,30,0.15);flex-shrink:0}
 #header h1{font-size:15px;font-weight:600}
 #header p{font-size:12px;color:#7a6248}
-#mode-btn{padding:6px 14px;border:1px solid rgba(80,55,30,0.3);border-radius:20px;background:#f0ebe3;color:#4a2e0c;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;transition:background .15s}
-#mode-btn:hover{background:#e0d8cc}
-#mode-btn.map-mode{background:#b5813e;color:#faf7f2;border-color:#7a5020}
 #toolbar{padding:8px 12px;background:#faf7f2;border-bottom:1px solid rgba(80,55,30,0.15);display:flex;gap:8px;align-items:center;flex-wrap:wrap;flex-shrink:0}
 #toolbar input,#toolbar select{font-size:13px;padding:5px 10px;border:1px solid rgba(80,55,30,0.25);border-radius:6px;background:#f0ebe3;color:#2c1f0e;outline:none}
 #toolbar input{width:200px}
@@ -35,7 +31,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0ebe3;color:#2c1f0
 .sep{height:1px;background:rgba(80,55,30,0.1);margin:6px 4px}
 #carea{flex:1;position:relative;overflow:hidden;cursor:grab;min-width:0}
 #carea.grab{cursor:grabbing}
-canvas{display:block;position:absolute;top:0;left:0}
+canvas{display:block}
 #hlabel{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(44,31,14,0.78);color:#faf7f2;font-size:12px;padding:3px 12px;border-radius:12px;pointer-events:none;display:none;white-space:nowrap;z-index:10}
 #absent{display:none;position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:#faf7f2;border:1px solid rgba(80,55,30,0.25);border-radius:8px;padding:10px 14px;font-size:12px;z-index:50;min-width:260px}
 #absent strong{display:block;margin-bottom:5px;font-size:13px}
@@ -70,11 +66,8 @@ canvas{display:block;position:absolute;top:0;left:0}
 </head>
 <body>
 <div id="header">
-  <div>
-    <h1>Cartographie des sols du Québec</h1>
-    <p>Séries de sol — Classification canadienne</p>
-  </div>
-  <button id="mode-btn">🗺 Vue carte</button>
+  <h1>Cartographie des sols du Québec</h1>
+  <p>Séries de sol — Classification canadienne</p>
 </div>
 <div id="toolbar">
   <input id="search" placeholder="Rechercher une série..." autocomplete="off"/>
@@ -126,7 +119,6 @@ canvas{display:block;position:absolute;top:0;left:0}
   <div class="leg"><svg width="22" height="8"><line x1="0" y1="4" x2="22" y2="4" stroke="rgba(107,92,74,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/></svg><span>Similaires</span></div>
   <span id="hint">Survol : nom &nbsp;|&nbsp; Clic : détails &nbsp;|&nbsp; Glisser + molette : navigation</span>
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script>
 const PAL={
@@ -135,64 +127,8 @@ const PAL={
   Brunisol: {fill:'#b5813e',stroke:'#7a5020',text:'#4a2e0c',light:'#f0dfc0'},
   Organique:{fill:'#5c4a3a',stroke:'#2e2018',text:'#faf7f2',light:'#c8bdb4'},
 };
-
-// Coordonnées approximatives des centroïdes des régions du Québec (longitude, latitude)
-const REGION_CENTROIDS = {
-  'Bas-Saint-Laurent':           [-68.5, 48.2],
-  'Saguenay–Lac-Saint-Jean':     [-71.5, 48.8],
-  'Capitale-Nationale':          [-71.2, 47.0],
-  'Mauricie':                    [-73.0, 46.8],
-  'Estrie':                      [-71.8, 45.4],
-  'Montréal':                    [-73.6, 45.55],
-  'Outaouais':                   [-76.0, 45.8],
-  'Abitibi-Témiscamingue':       [-77.5, 48.3],
-  'Côte-Nord':                   [-68.0, 50.5],
-  'Nord-du-Québec':              [-74.0, 54.5],
-  'Gaspésie–Îles-de-la-Madeleine':[-65.5, 48.5],
-  'Chaudière-Appalaches':        [-70.8, 46.3],
-  'Laval':                       [-73.75, 45.6],
-  'Lanaudière':                  [-73.5, 46.2],
-  'Laurentides':                 [-74.5, 46.5],
-  'Montérégie':                  [-73.2, 45.3],
-  'Centre-du-Québec':            [-72.3, 46.0],
-};
-
-// GeoJSON simplifié du Québec avec territoire revendiqué (Labrador)
-// Frontière revendiquée par le Québec incluant la péninsule du Labrador
-const QUEBEC_GEOJSON = {
-  "type":"Feature",
-  "properties":{"name":"Québec"},
-  "geometry":{
-    "type":"MultiPolygon",
-    "coordinates":[
-      // Québec continental + Labrador revendiqué
-      [[
-        [-79.5,45.0],[-74.7,45.0],[-73.5,45.0],[-71.5,45.0],[-70.0,45.2],
-        [-66.5,44.8],[-64.5,44.0],[-65.0,47.5],[-64.2,48.5],[-66.5,49.0],
-        [-67.5,47.8],[-69.0,47.5],[-70.5,47.2],[-71.2,46.8],
-        [-72.0,45.5],[-73.0,45.5],[-74.0,45.3],[-74.7,45.5],[-76.0,45.5],
-        [-77.0,46.0],[-78.5,46.5],[-79.5,47.0],[-79.5,45.0]
-      ]],
-      // Péninsule du Labrador (territoire revendiqué par le Québec)
-      [[
-        [-57.1,51.5],[-56.0,50.5],[-55.0,50.0],[-53.8,49.0],[-57.0,47.6],
-        [-59.5,47.5],[-61.0,47.8],[-64.5,48.0],[-65.5,49.5],[-66.5,50.0],
-        [-67.0,51.0],[-67.5,52.0],[-68.0,53.5],[-67.0,55.0],[-65.0,56.0],
-        [-63.0,57.0],[-61.0,58.0],[-63.0,58.5],[-64.5,60.0],[-67.0,59.5],
-        [-70.0,58.0],[-72.0,57.0],[-73.5,55.0],[-74.5,57.0],[-76.0,58.5],
-        [-77.5,59.5],[-79.5,62.5],[-79.5,55.0],[-74.0,55.0],[-73.0,53.0],
-        [-72.0,51.5],[-70.0,51.0],[-68.5,51.5],[-67.0,51.5],[-64.0,51.0],
-        [-60.5,50.0],[-59.0,49.5],[-57.5,50.0],[-57.1,51.5]
-      ]]
-    ]
-  }
-};
-
 let DATA=[],nodes=[],edges=[],selected=null,filterOrdre='',searchStr='';
 let T={x:0,y:0,k:1},drag=false,ds=null,ts=null;
-let viewMode='network'; // 'network' or 'map'
-let mapProjection=null, mapNodes=[];
-
 const cv=document.getElementById('c');
 const ctx=cv.getContext('2d');
 const ca=document.getElementById('carea');
@@ -201,52 +137,7 @@ const pbody=document.getElementById('pbody');
 const hl=document.getElementById('hlabel');
 const ab=document.getElementById('absent');
 
-function resize(){
-  cv.width=ca.clientWidth;
-  cv.height=ca.clientHeight;
-  if(viewMode==='map') setupMapProjection();
-  draw();
-}
-
-function setupMapProjection(){
-  const W=cv.width, H=cv.height;
-  const pad=40;
-  // Étendue du Québec incluant Labrador revendiqué
-  const lonMin=-79.5, lonMax=-57.0, latMin=44.8, latMax=62.5;
-  const scaleX=(W-pad*2)/(lonMax-lonMin);
-  const scaleY=(H-pad*2)/(latMax-latMin);
-  const scale=Math.min(scaleX,scaleY);
-  const offX=(W-(lonMax-lonMin)*scale)/2;
-  const offY=(H-(latMax-latMin)*scale)/2;
-  mapProjection=([lon,lat])=>[
-    offX+(lon-lonMin)*scale,
-    offY+(latMax-lat)*scale
-  ];
-  // Positionner les noeuds sur la carte
-  mapNodes={};
-  // Compter par région pour décaler les bulles
-  const byRegion={};
-  DATA.forEach(d=>{
-    if(!byRegion[d.region])byRegion[d.region]=[];
-    byRegion[d.region].push(d.id);
-  });
-  DATA.forEach(d=>{
-    const c=REGION_CENTROIDS[d.region];
-    if(c){
-      const [px,py]=mapProjection(c);
-      const list=byRegion[d.region];
-      const idx=list.indexOf(d.id);
-      const n=list.length;
-      // Disposition en cercle autour du centroïde
-      const angle=(2*Math.PI/n)*idx - Math.PI/2;
-      const spread=n>1?Math.min(35,n*8):0;
-      mapNodes[d.id]={
-        x: px+(n>1?spread*Math.cos(angle):0),
-        y: py+(n>1?spread*Math.sin(angle):0)
-      };
-    }
-  });
-}
+function resize(){cv.width=ca.clientWidth;cv.height=ca.clientHeight;draw();}
 
 function initData(series){
   DATA=series;
@@ -263,123 +154,55 @@ function initData(series){
     .force('y',d3.forceY(d=>oc[d.ordre]?.y||cy).strength(.4))
     .force('collide',d3.forceCollide(d=>d.r+3).strength(.9))
     .force('center',d3.forceCenter(cx,cy).strength(.02))
-    .alphaDecay(.018).on('tick',()=>{ if(viewMode==='network') draw(); });
-  setupMapProjection();
+    .alphaDecay(.018).on('tick',draw);
   buildSidebar();
-  draw();
 }
 
 const nb=id=>nodes.find(n=>n.id===id);
 const tw=(sx,sy)=>({x:(sx-T.x)/T.k,y:(sy-T.y)/T.k});
 
-function getNodePos(n){
-  if(viewMode==='map'&&mapNodes[n.id]) return mapNodes[n.id];
-  return {x:n.x,y:n.y};
-}
-
-function drawMap(){
-  // Fond carte
-  ctx.fillStyle='#e8e0d4';
-  ctx.fillRect(0,0,cv.width,cv.height);
-
-  if(!mapProjection) return;
-
-  // Dessin simplifié du Québec
-  ctx.save();
-  ctx.translate(T.x,T.y);ctx.scale(T.k,T.k);
-
-  // Contours des polygones
-  QUEBEC_GEOJSON.geometry.coordinates.forEach(poly=>{
-    poly.forEach(ring=>{
-      ctx.beginPath();
-      ring.forEach(([lon,lat],i)=>{
-        const [px,py]=mapProjection([lon,lat]);
-        i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
-      });
-      ctx.closePath();
-      ctx.fillStyle='#ddd5c4';
-      ctx.fill();
-      ctx.strokeStyle='#a09080';
-      ctx.lineWidth=1/T.k;
-      ctx.stroke();
-    });
-  });
-
-  // Labels régions
-  Object.entries(REGION_CENTROIDS).forEach(([nom,coord])=>{
-    const [px,py]=mapProjection(coord);
-    ctx.font=`${10/T.k}px 'Segoe UI',sans-serif`;
-    ctx.textAlign='center';
-    ctx.fillStyle='rgba(80,55,30,0.45)';
-    ctx.fillText(nom,px,py+28/T.k);
-  });
-
-  ctx.restore();
-}
-
 function draw(){
   ctx.clearRect(0,0,cv.width,cv.height);
-
-  if(viewMode==='map'){
-    drawMap();
-  } else {
-    ctx.fillStyle='#f0ebe3';
-    ctx.fillRect(0,0,cv.width,cv.height);
-  }
-
   ctx.save();ctx.translate(T.x,T.y);ctx.scale(T.k,T.k);
-
   const AS=new Set(nodes.filter(n=>{
     if(filterOrdre&&n.ordre!==filterOrdre)return false;
     if(searchStr&&!n.id.toLowerCase().includes(searchStr))return false;
     return true;
   }).map(n=>n.id));
-
   const sn=selected?nb(selected):null;
   const lk=new Set();
   if(sn)edges.forEach(e=>{if(e.src===selected)lk.add(e.tgt);if(e.tgt===selected)lk.add(e.src);});
-
-  // Arêtes
   edges.forEach(e=>{
     const a=nb(e.src),b=nb(e.tgt);
     if(!a||!b||!AS.has(a.id)||!AS.has(b.id))return;
-    const pa=getNodePos(a),pb=getNodePos(b);
     const h=sn&&(lk.has(a.id)||lk.has(b.id));
-    ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y);
+    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
     ctx.strokeStyle=h?'rgba(107,80,32,0.7)':'rgba(120,100,75,0.18)';
     ctx.lineWidth=(h?1.8:.8)/T.k;
     ctx.setLineDash(h?[]:[4/T.k,3/T.k]);ctx.stroke();ctx.setLineDash([]);
   });
-
-  // Noeuds
   nodes.forEach(n=>{
     if(!AS.has(n.id))return;
     const p=PAL[n.ordre],iS=selected===n.id,iL=lk.has(n.id),dm=sn&&!iS&&!iL;
-    const pos=getNodePos(n);
     ctx.globalAlpha=dm?.25:1;
-    ctx.beginPath();ctx.arc(pos.x,pos.y,n.r,0,2*Math.PI);
+    ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,2*Math.PI);
     ctx.fillStyle=iS?p.stroke:p.fill;ctx.fill();
     ctx.strokeStyle=iS?p.text:p.stroke;ctx.lineWidth=(iS?2.5:1.2)/T.k;ctx.stroke();
     const fs=Math.max(7,Math.min(12,n.r*.52))/T.k;
     ctx.fillStyle=iS?'#faf7f2':p.text;
     ctx.font=`${fs}px 'Segoe UI',sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText(n.id.length>10?n.id.slice(0,9)+'…':n.id,pos.x,pos.y);
-    if(n.special==='emblématique')star(pos.x,pos.y-n.r-7/T.k,5/T.k,'#b5813e','#7a5020');
-    else if(n.special==='magique')star(pos.x,pos.y-n.r-7/T.k,5/T.k,'#8aacb0','#3d6f74');
+    ctx.fillText(n.id.length>10?n.id.slice(0,9)+'…':n.id,n.x,n.y);
+    if(n.special==='emblématique')star(n.x,n.y-n.r-7/T.k,5/T.k,'#b5813e','#7a5020');
+    else if(n.special==='magique')star(n.x,n.y-n.r-7/T.k,5/T.k,'#8aacb0','#3d6f74');
     ctx.globalAlpha=1;
   });
-
-  // Labels ordres (vue réseau seulement)
-  if(viewMode==='network'){
-    [...new Set(DATA.map(d=>d.ordre))].forEach(o=>{
-      if(filterOrdre&&o!==filterOrdre)return;
-      const g=nodes.filter(n=>AS.has(n.id)&&n.ordre===o);if(!g.length)return;
-      const gx=d3.mean(g,n=>n.x),gy=d3.mean(g,n=>n.y)-d3.max(g,n=>n.r)-16/T.k;
-      ctx.globalAlpha=sn?.35:.8;ctx.font=`500 ${13/T.k}px 'Segoe UI',sans-serif`;
-      ctx.textAlign='center';ctx.fillStyle=PAL[o].stroke;ctx.fillText(o+'s',gx,gy);ctx.globalAlpha=1;
-    });
-  }
-
+  [...new Set(DATA.map(d=>d.ordre))].forEach(o=>{
+    if(filterOrdre&&o!==filterOrdre)return;
+    const g=nodes.filter(n=>AS.has(n.id)&&n.ordre===o);if(!g.length)return;
+    const gx=d3.mean(g,n=>n.x),gy=d3.mean(g,n=>n.y)-d3.max(g,n=>n.r)-16/T.k;
+    ctx.globalAlpha=sn?.35:.8;ctx.font=`500 ${13/T.k}px 'Segoe UI',sans-serif`;
+    ctx.textAlign='center';ctx.fillStyle=PAL[o].stroke;ctx.fillText(o+'s',gx,gy);ctx.globalAlpha=1;
+  });
   ctx.restore();
   document.getElementById('count').textContent=`${AS.size} série${AS.size!==1?'s':''}`;
 }
@@ -415,29 +238,13 @@ function openPanel(n){
 function closePanel(){panel.classList.remove('show');selected=null;updateActive();draw();}
 document.getElementById('px').addEventListener('click',closePanel);
 
-// Bouton mode
-document.getElementById('mode-btn').addEventListener('click',()=>{
-  viewMode=viewMode==='network'?'map':'network';
-  const btn=document.getElementById('mode-btn');
-  if(viewMode==='map'){
-    btn.textContent='🔵 Vue réseau';btn.classList.add('map-mode');
-    T={x:0,y:0,k:1};
-    setupMapProjection();
-  } else {
-    btn.textContent='🗺 Vue carte';btn.classList.remove('map-mode');
-    T={x:0,y:0,k:1};
-  }
-  draw();
-});
-
-// Pan & zoom
 ca.addEventListener('mousedown',e=>{if(e.target!==cv)return;drag=true;ds={x:e.clientX,y:e.clientY};ts={...T};ca.classList.add('grab');});
 window.addEventListener('mousemove',e=>{
   if(drag){T.x=ts.x+(e.clientX-ds.x);T.y=ts.y+(e.clientY-ds.y);draw();return;}
   const r=cv.getBoundingClientRect(),sx=e.clientX-r.left,sy=e.clientY-r.top;
   if(sx<0||sy<0||sx>r.width||sy>r.height){hl.style.display='none';return;}
-  const {x:wx,y:wy}=tw(sx,sy);
-  const hit=nodes.find(n=>{const pos=getNodePos(n);const dx=pos.x-wx,dy=pos.y-wy;return Math.sqrt(dx*dx+dy*dy)<n.r;});
+  const{x:wx,y:wy}=tw(sx,sy);
+  const hit=nodes.find(n=>{const dx=n.x-wx,dy=n.y-wy;return Math.sqrt(dx*dx+dy*dy)<n.r;});
   if(hit){cv.style.cursor='pointer';hl.textContent=hit.id+' — '+hit.superficie.toLocaleString('fr-CA')+' ha';hl.style.display='block';}
   else{cv.style.cursor='grab';hl.style.display='none';}
 });
@@ -445,13 +252,13 @@ window.addEventListener('mouseup',()=>{drag=false;ca.classList.remove('grab');})
 ca.addEventListener('wheel',e=>{
   e.preventDefault();
   const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
-  const f=e.deltaY<0?1.12:.89,nk=Math.min(6,Math.max(.2,T.k*f));
+  const f=e.deltaY<0?1.12:.89,nk=Math.min(4,Math.max(.2,T.k*f));
   T.x=mx-(mx-T.x)*(nk/T.k);T.y=my-(my-T.y)*(nk/T.k);T.k=nk;draw();
 },{passive:false});
 document.getElementById('zin').addEventListener('click',()=>zoom(1.25));
 document.getElementById('zout').addEventListener('click',()=>zoom(.8));
 document.getElementById('zreset').addEventListener('click',()=>{T={x:0,y:0,k:1};draw();});
-function zoom(f){const cx=cv.width/2,cy=cv.height/2,nk=Math.min(6,Math.max(.2,T.k*f));T.x=cx-(cx-T.x)*(nk/T.k);T.y=cy-(cy-T.y)*(nk/T.k);T.k=nk;draw();}
+function zoom(f){const cx=cv.width/2,cy=cv.height/2,nk=Math.min(4,Math.max(.2,T.k*f));T.x=cx-(cx-T.x)*(nk/T.k);T.y=cy-(cy-T.y)*(nk/T.k);T.k=nk;draw();}
 
 let ltd=null;
 ca.addEventListener('touchstart',e=>{if(e.touches.length===1){drag=true;ds={x:e.touches[0].clientX,y:e.touches[0].clientY};ts={...T};}else if(e.touches.length===2){ltd=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}},{passive:true});
@@ -460,7 +267,7 @@ ca.addEventListener('touchend',()=>{drag=false;ltd=null;});
 
 cv.addEventListener('click',e=>{
   const r=cv.getBoundingClientRect(),{x:wx,y:wy}=tw(e.clientX-r.left,e.clientY-r.top);
-  const hit=nodes.find(n=>{const pos=getNodePos(n);const dx=pos.x-wx,dy=pos.y-wy;return Math.sqrt(dx*dx+dy*dy)<n.r;});
+  const hit=nodes.find(n=>{const dx=n.x-wx,dy=n.y-wy;return Math.sqrt(dx*dx+dy*dy)<n.r;});
   if(hit){if(selected===hit.id){closePanel();}else{selected=hit.id;openPanel(hit);updateActive();draw();}}
   else{closePanel();}
 });
