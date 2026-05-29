@@ -60,6 +60,8 @@
   #tooltip .tt-sim { margin-top: 5px; font-size: 11px; color: var(--text-muted); }
   #tooltip .tt-sim strong { color: var(--text); }
   #tooltip .tt-special { margin-top: 6px; font-size: 11px; padding: 4px 8px; border-radius: 5px; font-style: italic; }
+  #tooltip .tt-pdf { display: inline-block; margin-top: 8px; font-size: 12px; color: #0F6E56; font-weight: 500; text-decoration: none; border: 0.5px solid #0F6E56; border-radius: 5px; padding: 3px 9px; }
+  #tooltip .tt-pdf:hover { background: #E1F5EE; }
   #tooltip .tt-embl { background: #FFF3CD; color: #856404; }
   #tooltip .tt-mag { background: #E8F4FD; color: #0a58ca; }
 
@@ -404,6 +406,7 @@ function showTooltip(e) {
     if (hit.special === 'magique') html += `<div class="tt-special tt-mag">✦ Sol magique</div>`;
     if (simIn.length) html += `<div class="tt-sim">Similaires : <strong>${simIn.join(', ')}</strong></div>`;
     if (simOut.length) html += `<div class="tt-sim">Non répertoriés : ${simOut.join(', ')}</div>`;
+    if (hit.pdf) html += `<a href="${hit.pdf}" target="_blank" rel="noopener" class="tt-pdf">Fiche technique IRDA →</a>`;
     tooltip.innerHTML = html;
     tooltip.style.display = 'block';
     let tx = e.clientX - rect.left + 14, ty = e.clientY - rect.top - 20;
