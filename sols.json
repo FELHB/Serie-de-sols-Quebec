@@ -273,7 +273,7 @@
     },
     {
       "id": "Nobel",
-      "ordre": "Organique",
+      "ordre": "Humisol",
       "superficie": 2322,
       "sim": [
         "Saint-Dominique",
@@ -467,7 +467,7 @@
     },
     {
       "id": "Verchères",
-      "ordre": "Organique",
+      "ordre": "Humisol",
       "superficie": 827,
       "sim": [
         "Cousineau",
