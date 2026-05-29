@@ -53,7 +53,7 @@
   #canvas-area.grabbing { cursor: grabbing; }
   canvas { display: block; }
 
-  #tooltip { position: absolute; background: var(--surface); border: 0.5px solid var(--border-strong); border-radius: 8px; padding: 10px 13px; font-size: 12px; pointer-events: none; display: none; max-width: 230px; line-height: 1.6; z-index: 100; box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+  #tooltip { position: absolute; background: var(--surface); border: 0.5px solid var(--border-strong); border-radius: 8px; padding: 10px 13px; font-size: 12px;  display: none; max-width: 230px; line-height: 1.6; z-index: 100; box-shadow: 0 4px 16px rgba(0,0,0,.1); }
   #tooltip .tt-name { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
   #tooltip .tt-badge { font-size: 11px; padding: 2px 7px; border-radius: 10px; display: inline-block; margin-bottom: 5px; font-weight: 500; }
   #tooltip .tt-sup { color: var(--text-muted); font-size: 12px; }
@@ -146,6 +146,7 @@ let nodes = [], edges = [];
 let selected = null, filterOrdre = '', searchStr = '';
 let transform = {x:0, y:0, k:1};
 let dragging = false, dragStart = null, transformStart = null;
+let tooltipHovered = false;
 
 const canvas = document.getElementById('c');
 const ctx = canvas.getContext('2d');
@@ -327,6 +328,7 @@ area.addEventListener('mousedown', e => {
 });
 window.addEventListener('mousemove', e => {
   if (!dragging) {
+    if (e.target === tooltip || tooltip.contains(e.target)) return;
     showTooltip(e); return;
   }
   transform.x = transformStart.x + (e.clientX - dragStart.x);
@@ -418,6 +420,12 @@ function showTooltip(e) {
     tooltip.style.display = 'none';
   }
 }
+
+canvas.addEventListener('mouseleave', () => {
+  if (!tooltipHovered) tooltip.style.display = 'none';
+});
+tooltip.addEventListener('mouseenter', () => { tooltipHovered = true; });
+tooltip.addEventListener('mouseleave', () => { tooltipHovered = false; tooltip.style.display = 'none'; });
 
 canvas.addEventListener('click', e => {
   const rect = canvas.getBoundingClientRect();
