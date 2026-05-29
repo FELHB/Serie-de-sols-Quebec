@@ -32,7 +32,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0ebe3;color:#2c1f0
 #carea{flex:1;position:relative;overflow:hidden;cursor:grab;min-width:0}
 #carea.grab{cursor:grabbing}
 canvas{display:block}
-#hlabel{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(44,31,14,0.78);color:#faf7f2;font-size:12px;padding:3px 12px;border-radius:12px;pointer-events:none;display:none;white-space:nowrap}
+#hlabel{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(44,31,14,0.78);color:#faf7f2;font-size:12px;padding:3px 12px;border-radius:12px;pointer-events:none;display:none;white-space:nowrap;z-index:10}
 #absent{display:none;position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:#faf7f2;border:1px solid rgba(80,55,30,0.25);border-radius:8px;padding:10px 14px;font-size:12px;z-index:50;min-width:260px}
 #absent strong{display:block;margin-bottom:5px;font-size:13px}
 #absent ul{list-style:none}
@@ -109,14 +109,12 @@ canvas{display:block}
   <div class="leg"><div class="ld" style="background:#c8bfa8;border:2px solid #6b5c42"></div><span>Podzols</span></div>
   <div class="leg"><div class="ld" style="background:#8aacb0;border:2px solid #3d6f74"></div><span>Gleysols</span></div>
   <div class="leg"><div class="ld" style="background:#b5813e;border:2px solid #7a5020"></div><span>Brunisols</span></div>
-  <div class="leg"><div class="ld" style="background:#6b5c4a;border:2px solid #3d3228"></div><span>Humisols</span></div>
+  <div class="leg"><div class="ld" style="background:#5c4a3a;border:2px solid #2e2018"></div><span>Humisols</span></div>
   <div class="leg" style="margin-left:6px">
-    <svg width="13" height="13" viewBox="0 0 14 14"><polygon points="7,1 8.8,5.5 13.5,5.5 9.8,8.5 11.2,13 7,10 2.8,13 4.2,8.5 0.5,5.5 5.2,5.5" fill="#b5813e" stroke="#7a5020" stroke-width="0.8"/></svg>
-    <span>Emblématique</span>
+    <svg width="13" height="13" viewBox="0 0 14 14"><polygon points="7,1 8.8,5.5 13.5,5.5 9.8,8.5 11.2,13 7,10 2.8,13 4.2,8.5 0.5,5.5 5.2,5.5" fill="#b5813e" stroke="#7a5020" stroke-width="0.8"/></svg><span>Emblématique</span>
   </div>
   <div class="leg">
-    <svg width="13" height="13" viewBox="0 0 14 14"><polygon points="7,1 8.8,5.5 13.5,5.5 9.8,8.5 11.2,13 7,10 2.8,13 4.2,8.5 0.5,5.5 5.2,5.5" fill="#8aacb0" stroke="#3d6f74" stroke-width="0.8"/></svg>
-    <span>Magique</span>
+    <svg width="13" height="13" viewBox="0 0 14 14"><polygon points="7,1 8.8,5.5 13.5,5.5 9.8,8.5 11.2,13 7,10 2.8,13 4.2,8.5 0.5,5.5 5.2,5.5" fill="#8aacb0" stroke="#3d6f74" stroke-width="0.8"/></svg><span>Magique</span>
   </div>
   <div class="leg"><svg width="22" height="8"><line x1="0" y1="4" x2="22" y2="4" stroke="rgba(107,92,74,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/></svg><span>Similaires</span></div>
   <span id="hint">Survol : nom &nbsp;|&nbsp; Clic : détails &nbsp;|&nbsp; Glisser + molette : navigation</span>
@@ -127,7 +125,7 @@ const PAL={
   Podzol:  {fill:'#c8bfa8',stroke:'#6b5c42',text:'#3d3220',light:'#ede8df'},
   Gleysol: {fill:'#8aacb0',stroke:'#3d6f74',text:'#1e3f43',light:'#ddeaec'},
   Brunisol:{fill:'#b5813e',stroke:'#7a5020',text:'#4a2e0c',light:'#f0dfc0'},
-  Humisol: {fill:'#6b5c4a',stroke:'#3d3228',text:'#faf7f2',light:'#d4cdc4'},
+  Humisol: {fill:'#5c4a3a',stroke:'#2e2018',text:'#faf7f2',light:'#c8bdb4'},
 };
 let DATA=[],nodes=[],edges=[],selected=null,filterOrdre='',searchStr='';
 let T={x:0,y:0,k:1},drag=false,ds=null,ts=null;
@@ -185,7 +183,8 @@ function draw(){
   });
   nodes.forEach(n=>{
     if(!AS.has(n.id))return;
-    const p=PAL[n.ordre],iS=selected===n.id,iL=lk.has(n.id),dm=sn&&!iS&&!iL;
+    const p=PAL[n.ordre]||PAL.Podzol;
+    const iS=selected===n.id,iL=lk.has(n.id),dm=sn&&!iS&&!iL;
     ctx.globalAlpha=dm?.25:1;
     ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,2*Math.PI);
     ctx.fillStyle=iS?p.stroke:p.fill;ctx.fill();
@@ -203,7 +202,7 @@ function draw(){
     const g=nodes.filter(n=>AS.has(n.id)&&n.ordre===o);if(!g.length)return;
     const gx=d3.mean(g,n=>n.x),gy=d3.mean(g,n=>n.y)-d3.max(g,n=>n.r)-16/T.k;
     ctx.globalAlpha=sn?.35:.8;ctx.font=`500 ${13/T.k}px 'Segoe UI',sans-serif`;
-    ctx.textAlign='center';ctx.fillStyle=PAL[o].stroke;ctx.fillText(o+'s',gx,gy);ctx.globalAlpha=1;
+    ctx.textAlign='center';ctx.fillStyle=(PAL[o]||PAL.Podzol).stroke;ctx.fillText(o+'s',gx,gy);ctx.globalAlpha=1;
   });
   ctx.restore();
   document.getElementById('count').textContent=`${AS.size} série${AS.size!==1?'s':''}`;
@@ -216,7 +215,8 @@ function star(cx,cy,r,fill,stroke){
 }
 
 function openPanel(n){
-  const p=PAL[n.ordre],ids=new Set(DATA.map(d=>d.id));
+  const p=PAL[n.ordre]||PAL.Podzol;
+  const ids=new Set(DATA.map(d=>d.id));
   const si=(n.sim||[]).filter(s=>ids.has(s)),so=(n.sim||[]).filter(s=>!ids.has(s));
   let h=`<div class="pn">${n.id}</div>`;
   h+=`<span class="pb" style="background:${p.light};color:${p.text}">${n.ordre}</span>`;
@@ -244,7 +244,7 @@ window.addEventListener('mousemove',e=>{
   if(drag){T.x=ts.x+(e.clientX-ds.x);T.y=ts.y+(e.clientY-ds.y);draw();return;}
   const r=cv.getBoundingClientRect(),sx=e.clientX-r.left,sy=e.clientY-r.top;
   if(sx<0||sy<0||sx>r.width||sy>r.height){hl.style.display='none';return;}
-  const {x:wx,y:wy}=tw(sx,sy);
+  const{x:wx,y:wy}=tw(sx,sy);
   const hit=nodes.find(n=>{const dx=n.x-wx,dy=n.y-wy;return Math.sqrt(dx*dx+dy*dy)<n.r;});
   if(hit){cv.style.cursor='pointer';hl.textContent=hit.id+' — '+hit.superficie.toLocaleString('fr-CA')+' ha';hl.style.display='block';}
   else{cv.style.cursor='grab';hl.style.display='none';}
@@ -253,13 +253,13 @@ window.addEventListener('mouseup',()=>{drag=false;ca.classList.remove('grab');})
 ca.addEventListener('wheel',e=>{
   e.preventDefault();
   const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
-  const f=e.deltaY<0?1.12:.89,nk=Math.min(4,Math.max(.3,T.k*f));
+  const f=e.deltaY<0?1.12:.89,nk=Math.min(4,Math.max(.2,T.k*f));
   T.x=mx-(mx-T.x)*(nk/T.k);T.y=my-(my-T.y)*(nk/T.k);T.k=nk;draw();
 },{passive:false});
 document.getElementById('zin').addEventListener('click',()=>zoom(1.25));
 document.getElementById('zout').addEventListener('click',()=>zoom(.8));
 document.getElementById('zreset').addEventListener('click',()=>{T={x:0,y:0,k:1};draw();});
-function zoom(f){const cx=cv.width/2,cy=cv.height/2,nk=Math.min(4,Math.max(.3,T.k*f));T.x=cx-(cx-T.x)*(nk/T.k);T.y=cy-(cy-T.y)*(nk/T.k);T.k=nk;draw();}
+function zoom(f){const cx=cv.width/2,cy=cv.height/2,nk=Math.min(4,Math.max(.2,T.k*f));T.x=cx-(cx-T.x)*(nk/T.k);T.y=cy-(cy-T.y)*(nk/T.k);T.k=nk;draw();}
 
 let ltd=null;
 ca.addEventListener('touchstart',e=>{if(e.touches.length===1){drag=true;ds={x:e.touches[0].clientX,y:e.touches[0].clientY};ts={...T};}else if(e.touches.length===2){ltd=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}},{passive:true});
@@ -275,7 +275,7 @@ cv.addEventListener('click',e=>{
 
 document.getElementById('search').addEventListener('input',e=>{
   searchStr=e.target.value.toLowerCase();
-  const val=e.target.value.trim(),ids=new Set(DATA.map(d=>d.id));
+  const val=e.target.value.trim();
   if(val.length>1&&!nodes.some(n=>n.id.toLowerCase().includes(val.toLowerCase()))){
     const matches=[];
     nodes.forEach(n=>{(n.sim||[]).forEach(s=>{if(s.toLowerCase().includes(val.toLowerCase())&&!matches.find(m=>m.ref===n.id))matches.push({absent:s,ref:n.id});});});
@@ -298,7 +298,8 @@ function buildSidebar(){
   rest.forEach(d=>addItem(list,d));
 }
 function addItem(list,d){
-  const p=PAL[d.ordre],li=document.createElement('div');li.className='si';li.dataset.id=d.id;
+  const p=PAL[d.ordre]||PAL.Podzol;
+  const li=document.createElement('div');li.className='si';li.dataset.id=d.id;
   let b='';if(d.special==='emblématique')b=`<span class="sb se">★</span>`;else if(d.special==='magique')b=`<span class="sb sm">✦</span>`;
   li.innerHTML=`<div class="sdot" style="background:${p.fill};border:1.5px solid ${p.stroke}"></div>${d.id}${b}`;
   li.addEventListener('click',()=>{if(selected===d.id){closePanel();}else{selected=d.id;filterOrdre='';searchStr='';document.getElementById('filter').value='';document.getElementById('search').value='';ab.style.display='none';const n=nb(d.id);if(n)openPanel(n);updateActive();draw();}});
@@ -306,7 +307,7 @@ function addItem(list,d){
 }
 function updateActive(){document.querySelectorAll('.si').forEach(el=>el.classList.toggle('on',el.dataset.id===selected));}
 
-fetch('sols.json').then(r=>r.json()).then(data=>{resize();initData(data.series);}).catch(()=>console.warn('Ouvrir via GitHub Pages'));
+fetch('sols.json').then(r=>r.json()).then(data=>{resize();initData(data.series);}).catch(e=>console.error('Erreur chargement sols.json:',e));
 window.addEventListener('resize',resize);
 </script>
 </body>
