@@ -3,48 +3,72 @@
     {
       "id": "Achigan",
       "ordre": "Podzol",
-      "superficie": 17125,
+      "superficie": 56019,
       "sim": [
         "Massueville",
-        "Saint-Thomas",
+        "Sainte-Thomas",
         "Joseph"
       ],
-      "pdf": "https://irda.qc.ca/media/3udasu2f/irda-seriesolachigan-fichesynthese-2026.pdf"
+      "pdf": "https://irda.qc.ca/media/3udasu2f/irda-seriesolachigan-fichesynthese-2026.pdf",
+      "region": "Lanaudière"
+    },
+    {
+      "id": "Alma",
+      "ordre": "Gleysol",
+      "superficie": 25290,
+      "sim": [
+        "Taillon"
+      ],
+      "pdf": "",
+      "region": ""
     },
     {
       "id": "Amqui",
       "ordre": "Podzol",
-      "superficie": 4901,
+      "superficie": 5742,
       "sim": [
         "Val-Brillant",
         "Irène"
       ],
-      "pdf": "https://irda.qc.ca/media/o0vh5ibi/irda-seriesolamqui-fichesynthese-2026.pdf"
+      "pdf": "https://irda.qc.ca/media/o0vh5ibi/irda-seriesolamqui-fichesynthese-2026.pdf",
+      "region": "Bas-Saint-Laurent"
     },
     {
       "id": "Ascot",
       "ordre": "Podzol",
-      "superficie": 9613,
+      "superficie": 63705,
       "sim": [
         "Blandford",
         "Sherbrooke"
       ],
-      "pdf": "https://irda.qc.ca/media/mihj0gxw/irda-seriesolascot-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/mihj0gxw/irda-seriesolascot-fichesynthese-2024.pdf",
+      "region": "Estrie"
     },
     {
       "id": "Aston",
       "ordre": "Gleysol",
-      "superficie": 57626,
+      "superficie": 29961,
       "sim": [
         "Saint-Damase",
         "La Présentation"
       ],
-      "pdf": "https://irda.qc.ca/media/lkgbeiyy/irda-seriesolaston-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/lkgbeiyy/irda-seriesolaston-fichesynthese-2024.pdf",
+      "region": "Centre-du-Québec"
+    },
+    {
+      "id": "Baby",
+      "ordre": "Gleysol",
+      "superficie": 4997,
+      "sim": [
+        "Duhamel"
+      ],
+      "pdf": "",
+      "region": ""
     },
     {
       "id": "Beaudette",
       "ordre": "Gleysol",
-      "superficie": 9904,
+      "superficie": 13760,
       "sim": [
         "Chaloupe",
         "Dupas",
@@ -52,49 +76,74 @@
         "Saint-Hyacinthe",
         "Richelieu"
       ],
-      "pdf": "https://irda.qc.ca/media/za4bh445/irda-seriesolbeaudette-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/za4bh445/irda-seriesolbeaudette-fichesynthese-2024.pdf",
+      "region": "Lanaudière"
     },
     {
       "id": "Beaurivage",
       "ordre": "Podzol",
-      "superficie": 32008,
+      "superficie": 45036,
       "sim": [
         "Saint-Jude",
         "Sainte-Sophie",
         "Morin"
       ],
-      "pdf": "https://irda.qc.ca/media/q3llzqim/irda-seriesolbeaurivage-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/q3llzqim/irda-seriesolbeaurivage-fichesynthese-2024.pdf",
+      "region": "Chaudière-Appalaches"
     },
     {
       "id": "Bedford",
       "ordre": "Gleysol",
-      "superficie": 45377,
+      "superficie": 44749,
       "sim": [
         "Grantham",
         "Durham",
         "Raimbault"
       ],
-      "pdf": "https://irda.qc.ca/media/13enno1s/irda-seriesolbedford-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/13enno1s/irda-seriesolbedford-fichesynthese-2024.pdf",
+      "region": "Montérégie"
     },
     {
       "id": "Blandford",
       "ordre": "Brunisol",
-      "superficie": 27473,
+      "superficie": 106353,
       "sim": [
         "Woodbridge",
         "Leeds"
       ],
-      "pdf": "https://irda.qc.ca/media/cysgpjqk/irda-seriesolblandford-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/cysgpjqk/irda-seriesolblandford-fichesynthese-2024.pdf",
+      "region": "Chaudière-Appalaches"
+    },
+    {
+      "id": "Boucherville",
+      "ordre": "Gleysol",
+      "superficie": 13509,
+      "sim": [
+        "Bedford"
+      ],
+      "pdf": "",
+      "region": ""
+    },
+    {
+      "id": "Bouchette",
+      "ordre": "Podzol",
+      "superficie": 16621,
+      "sim": [
+        "Moncerf"
+      ],
+      "pdf": "",
+      "region": ""
     },
     {
       "id": "Calais",
       "ordre": "Gleysol",
-      "superficie": 22636,
+      "superficie": 118892,
       "sim": [
         "Dufferin",
         "Magog"
       ],
-      "pdf": "https://irda.qc.ca/media/r0gjodya/irda-seriesolcalais-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/r0gjodya/irda-seriesolcalais-fichesynthese-2024.pdf",
+      "region": "Estrie"
     },
     {
       "id": "Casgrain",
@@ -104,152 +153,278 @@
         "Cazeau",
         "Auteil"
       ],
-      "pdf": "https://irda.qc.ca/media/5nahlreb/irda-seriesolcasgrain-fichesynthese-2026.pdf"
+      "pdf": "https://irda.qc.ca/media/5nahlreb/irda-seriesolcasgrain-fichesynthese-2026.pdf",
+      "region": "Capitale-Nationale"
     },
     {
       "id": "Chaloupe",
       "ordre": "Gleysol",
-      "superficie": 12094,
+      "superficie": 17119,
       "sim": [
         "Batiscan",
         "Dupas"
       ],
-      "pdf": "https://irda.qc.ca/media/mtbdpmh3/irda-seriesolchaloupe-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/mtbdpmh3/irda-seriesolchaloupe-fichesynthese-2024.pdf",
+      "region": "Mauricie"
+    },
+    {
+      "id": "Chambly",
+      "ordre": "Gleysol",
+      "superficie": 9278,
+      "sim": [
+        "Providence",
+        "Rideau",
+        "Saint-Blaise"
+      ],
+      "pdf": "",
+      "region": ""
     },
     {
       "id": "Chapais",
       "ordre": "Podzol",
-      "superficie": 18046,
+      "superficie": 178931,
       "sim": [
         "Painchaud"
       ],
-      "pdf": "https://irda.qc.ca/media/d4enhyve/irda-seriesolchapais-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/d4enhyve/irda-seriesolchapais-fichesynthese-2024.pdf",
+      "region": "Bas-Saint-Laurent"
     },
     {
       "id": "Charlevoix",
       "ordre": "Podzol",
-      "superficie": 4383,
+      "superficie": 42202,
       "sim": [
         "La Mare",
         "Baie-Saint-Paul",
         "Miche"
       ],
-      "pdf": "https://irda.qc.ca/media/oiyopmzj/irda-seriesolcharlevoix-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/oiyopmzj/irda-seriesolcharlevoix-fichesynthese-2024.pdf",
+      "region": "Capitale-Nationale"
     },
     {
       "id": "Comis",
       "ordre": "Brunisol",
-      "superficie": 2507,
+      "superficie": 3372,
       "sim": [
         "Lac au saumon",
         "Irène",
         "Amqui"
       ],
-      "pdf": "https://irda.qc.ca/media/t3nlfois/irda-seriesolcomis-fichesynthese-2026.pdf"
+      "pdf": "https://irda.qc.ca/media/t3nlfois/irda-seriesolcomis-fichesynthese-2026.pdf",
+      "region": "Gaspésie–Îles-de-la-Madeleine"
     },
     {
       "id": "Dalhousie",
       "ordre": "Gleysol",
-      "superficie": 29202,
+      "superficie": 37681,
       "sim": [
         "Sainte-Rosalie",
         "Kierkoski"
       ],
-      "pdf": "https://irda.qc.ca/media/oh3mbs3d/irda-seriesoldalhousie-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/oh3mbs3d/irda-seriesoldalhousie-fichesynthese-2024.pdf",
+      "region": "Outaouais"
+    },
+    {
+      "id": "Danby",
+      "ordre": "Podzol",
+      "superficie": 23707,
+      "sim": [
+        "Saint-Bruno"
+      ],
+      "pdf": "",
+      "region": ""
     },
     {
       "id": "De L'Anse",
       "ordre": "Gleysol",
-      "superficie": 6150,
+      "superficie": 8840,
       "sim": [
         "Kamouraska",
         "Saint-Pascal"
       ],
       "pdf": "https://irda.qc.ca/media/qhtkqwzc/irda-seriesoldelanse-fichesynthese-2026.pdf",
+      "region": "Bas-Saint-Laurent",
       "special": "magique"
+    },
+    {
+      "id": "Des Saults",
+      "ordre": "Gleysol",
+      "superficie": 13495,
+      "sim": [
+        "Chaloupe",
+        "Saint-Aimé",
+        "Des Sault",
+        "Le Bras"
+      ],
+      "pdf": "",
+      "region": ""
+    },
+    {
+      "id": "Dufferin",
+      "ordre": "Podzol",
+      "superficie": 62311,
+      "sim": [
+        "Magog",
+        "Calais"
+      ],
+      "pdf": "",
+      "region": ""
+    },
+    {
+      "id": "Duhamel",
+      "ordre": "Gleysol",
+      "superficie": 4741,
+      "sim": [
+        "Baby"
+      ],
+      "pdf": "",
+      "region": ""
     },
     {
       "id": "Greensboro",
       "ordre": "Brunisol",
-      "superficie": 26071,
+      "superficie": 176598,
       "sim": [
         "Gayhurst",
         "Sherbrooke"
       ],
-      "pdf": "https://irda.qc.ca/media/wydf4ida/irda-seriesolgreensboro-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/wydf4ida/irda-seriesolgreensboro-fichesynthese-2024.pdf",
+      "region": "Estrie"
+    },
+    {
+      "id": "Guérin",
+      "ordre": "Gleysol",
+      "superficie": 4566,
+      "sim": [
+        "Palmarolle",
+        "Roquemaure"
+      ],
+      "pdf": "",
+      "region": ""
     },
     {
       "id": "Hébertville",
       "ordre": "Gleysol",
-      "superficie": 8419,
+      "superficie": 7717,
       "sim": [
         "Chicoutimi",
         "Normandin"
       ],
-      "pdf": "https://irda.qc.ca/media/zbggptt2/irda-seriesolhebertville-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/zbggptt2/irda-seriesolhebertville-fichesynthese-2024.pdf",
+      "region": "Saguenay–Lac-Saint-Jean"
     },
     {
       "id": "Joseph",
       "ordre": "Gleysol",
-      "superficie": 9351,
+      "superficie": 12878,
       "sim": [
         "Massueville",
         "Saint-Samuel"
       ],
-      "pdf": "https://irda.qc.ca/media/jzxesqh0/irda-seriesolajoseph-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/jzxesqh0/irda-seriesolajoseph-fichesynthese-2024.pdf",
+      "region": "Montérégie"
     },
     {
       "id": "Kamouraska",
       "ordre": "Gleysol",
-      "superficie": 25544,
+      "superficie": 31713,
       "sim": [
         "La Pocatière",
         "Saint-Paul",
         "De L'Anse"
       ],
-      "pdf": "https://irda.qc.ca/media/dizbpir0/irda-seriesolkamouraska-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/dizbpir0/irda-seriesolkamouraska-fichesynthese-2024.pdf",
+      "region": "Bas-Saint-Laurent"
+    },
+    {
+      "id": "Kierkoski",
+      "ordre": "Gleysol",
+      "superficie": 9025,
+      "sim": [
+        "Saint-Laurent",
+        "Dalhousie"
+      ],
+      "pdf": "",
+      "region": ""
+    },
+    {
+      "id": "La Pocatière",
+      "ordre": "Gleysol",
+      "superficie": 6045,
+      "sim": [
+        "De l'Anse",
+        "Kamouraska",
+        "Saint-Pascal"
+      ],
+      "pdf": "",
+      "region": ""
     },
     {
       "id": "Le Bras",
       "ordre": "Gleysol",
-      "superficie": 5474,
+      "superficie": 3827,
       "sim": [
         "Neubois",
         "Des Saults",
         "Lévrard"
       ],
-      "pdf": "https://irda.qc.ca/media/tiybwu52/irda-seriesollebras-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/tiybwu52/irda-seriesollebras-fichesynthese-2024.pdf",
+      "region": "Chaudière-Appalaches"
+    },
+    {
+      "id": "Leeds",
+      "ordre": "Podzol",
+      "superficie": 83890,
+      "sim": [
+        "Chapais",
+        "Charlevoix"
+      ],
+      "pdf": "",
+      "region": ""
     },
     {
       "id": "Lévrard",
       "ordre": "Gleysol",
-      "superficie": 45377,
+      "superficie": 20415,
       "sim": [
         "Des Sault",
         "Saint-Hyacinthe",
         "Saint-Aimé"
       ],
-      "pdf": "https://irda.qc.ca/media/fpxh4y3z/irda-seriesollevrard-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/fpxh4y3z/irda-seriesollevrard-fichesynthese-2024.pdf",
+      "region": "Centre-du-Québec"
     },
     {
       "id": "Magog",
       "ordre": "Gleysol",
-      "superficie": 20397,
+      "superficie": 87499,
       "sim": [
         "Calais",
         "Sherbrooke"
       ],
-      "pdf": "https://irda.qc.ca/media/tzehyger/irda-seriesolmagog-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/tzehyger/irda-seriesolmagog-fichesynthese-2024.pdf",
+      "region": "Estrie"
     },
     {
       "id": "Mawcook",
       "ordre": "Gleysol",
-      "superficie": 35394,
+      "superficie": 51882,
       "sim": [
         "Des Pins",
         "Raimbault"
       ],
-      "pdf": "https://irda.qc.ca/media/0nyjfvxj/irda-seriesolmawcook-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/0nyjfvxj/irda-seriesolmawcook-fichesynthese-2024.pdf",
+      "region": "Chaudière-Appalaches"
+    },
+    {
+      "id": "Montcerf",
+      "ordre": "Gleysol",
+      "superficie": 11063,
+      "sim": [
+        "Bouchette"
+      ],
+      "pdf": "",
+      "region": ""
     },
     {
       "id": "Montmorency",
@@ -258,217 +433,369 @@
       "sim": [
         "Auteil"
       ],
-      "pdf": "https://irda.qc.ca/media/ntnhot3h/irda-seriesolmontmorency-fichesynthese-2026.pdf"
+      "pdf": "https://irda.qc.ca/media/ntnhot3h/irda-seriesolmontmorency-fichesynthese-2026.pdf",
+      "region": "Capitale-Nationale"
     },
     {
       "id": "Morin",
       "ordre": "Podzol",
-      "superficie": 11397,
+      "superficie": 104149,
       "sim": [
         "Pont-Rouge",
         "Uplands",
         "Saint-Thomas"
       ],
-      "pdf": "https://irda.qc.ca/media/rzbhfvtl/irda-seriesolmorin-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/rzbhfvtl/irda-seriesolmorin-fichesynthese-2024.pdf",
+      "region": "Outaouais"
     },
     {
       "id": "Nobel",
       "ordre": "Organique",
-      "superficie": 2322,
+      "superficie": 1417,
       "sim": [
         "Saint-Dominique",
         "La Rabaslière"
       ],
-      "pdf": "https://irda.qc.ca/media/lola50ik/irda-seriesolnobel-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/lola50ik/irda-seriesolnobel-fichesynthese-2024.pdf",
+      "region": "Montérégie"
+    },
+    {
+      "id": "Norbertville",
+      "ordre": "Gleysol",
+      "superficie": 6069,
+      "sim": [
+        "Mawcook",
+        "Woodbridge",
+        "Sainte-Marie"
+      ],
+      "pdf": "",
+      "region": ""
+    },
+    {
+      "id": "Normandin",
+      "ordre": "Gleysol",
+      "superficie": 7764,
+      "sim": [
+        "Hébertville"
+      ],
+      "pdf": "",
+      "region": ""
     },
     {
       "id": "Orléans",
       "ordre": "Brunisol",
-      "superficie": 5284,
+      "superficie": 11511,
       "sim": [
         "Saint-André",
         "Saint-Nicolas"
       ],
-      "pdf": "https://irda.qc.ca/media/5n0dteix/irda-seriesolorleans-fichesynthese-2026.pdf"
+      "pdf": "https://irda.qc.ca/media/5n0dteix/irda-seriesolorleans-fichesynthese-2026.pdf",
+      "region": "Capitale-Nationale"
+    },
+    {
+      "id": "Palmarolle",
+      "ordre": "Gleysol",
+      "superficie": 40686,
+      "sim": [
+        "Guérin",
+        "Roquemaure"
+      ],
+      "pdf": "",
+      "region": ""
     },
     {
       "id": "Providence",
       "ordre": "Gleysol",
-      "superficie": 35477,
+      "superficie": 45251,
       "sim": [
         "Sainte-Rosalie",
         "Saint-Urbain",
         "Rideau"
       ],
-      "pdf": "https://irda.qc.ca/media/2unhztvh/irda-seriesolprovidence-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/2unhztvh/irda-seriesolprovidence-fichesynthese-2024.pdf",
+      "region": "Montérégie"
     },
     {
       "id": "Quisibis",
       "ordre": "Podzol",
-      "superficie": 5261,
+      "superficie": 47653,
       "sim": [
         "Holmerville",
         "Glassville"
       ],
-      "pdf": "https://irda.qc.ca/media/0q4h0chu/irda-seriesolquisibis-fichesynthese-2026.pdf"
+      "pdf": "https://irda.qc.ca/media/0q4h0chu/irda-seriesolquisibis-fichesynthese-2026.pdf",
+      "region": "Bas-Saint-Laurent"
     },
     {
       "id": "Raimbault",
       "ordre": "Gleysol",
-      "superficie": 18800,
+      "superficie": 24538,
       "sim": [
         "Mawcook",
         "Kingsey",
         "Bedford"
       ],
-      "pdf": "https://irda.qc.ca/media/54jep5nw/irda-seriesolraimbault-fichesynthese-2026.pdf"
+      "pdf": "https://irda.qc.ca/media/54jep5nw/irda-seriesolraimbault-fichesynthese-2026.pdf",
+      "region": "Centre-du-Québec"
     },
     {
       "id": "Rideau",
       "ordre": "Gleysol",
-      "superficie": 43341,
+      "superficie": 70079,
       "sim": [
         "Providence"
       ],
-      "pdf": "https://irda.qc.ca/media/dbspmdvk/irda-seriesolrideau-fichesynthese-2026.pdf"
+      "pdf": "https://irda.qc.ca/media/dbspmdvk/irda-seriesolrideau-fichesynthese-2026.pdf",
+      "region": "Montréal"
+    },
+    {
+      "id": "Roquemaure",
+      "ordre": "Gleysol",
+      "superficie": 29861,
+      "sim": [
+        "Palmarolle",
+        "Guérin"
+      ],
+      "pdf": "",
+      "region": ""
+    },
+    {
+      "id": "Saint-Blaise",
+      "ordre": "Gleysol",
+      "superficie": 16387,
+      "sim": [
+        "Providence",
+        "Rideau",
+        "Chambly"
+      ],
+      "pdf": "",
+      "region": ""
+    },
+    {
+      "id": "Saint-Bruno",
+      "ordre": "Podzol",
+      "superficie": 73961,
+      "sim": [
+        "Danby"
+      ],
+      "pdf": "",
+      "region": ""
+    },
+    {
+      "id": "Saint-Dominique",
+      "ordre": "Organique",
+      "superficie": 1663,
+      "sim": [
+        "Nobel",
+        "Verchère"
+      ],
+      "pdf": "",
+      "region": ""
+    },
+    {
+      "id": "Sainte-Barbe",
+      "ordre": "Gleysol",
+      "superficie": 8482,
+      "sim": [
+        "Beaudette",
+        "Saint-Hyacinthe",
+        "Lévrard"
+      ],
+      "pdf": "",
+      "region": ""
+    },
+    {
+      "id": "Sainte-Brigide",
+      "ordre": "Gleysol",
+      "superficie": 15187,
+      "sim": [
+        "Raimbault"
+      ],
+      "pdf": "",
+      "region": ""
     },
     {
       "id": "Saint-Laurent",
       "ordre": "Gleysol",
-      "superficie": 12669,
+      "superficie": 16712,
       "sim": [
         "Du jour",
         "Saint-Marcel"
       ],
-      "pdf": "https://irda.qc.ca/media/0v5k2xxe/irda-seriesolstlaurent-fichesynthese-2026.pdf"
+      "pdf": "https://irda.qc.ca/media/0v5k2xxe/irda-seriesolstlaurent-fichesynthese-2026.pdf",
+      "region": "Mauricie"
     },
     {
-      "id": "Sainte-Rosalie",
-      "ordre": "Gleysol",
-      "superficie": 157021,
+      "id": "Shefford",
+      "ordre": "Podzol",
+      "superficie": 25316,
       "sim": [
-        "Saint-Urbain",
-        "Providence"
+        "Saint-Sébastien"
       ],
-      "pdf": "https://irda.qc.ca/media/2uijgwkt/irda-seriesolsterosalie-fichesynthese-2024.pdf",
-      "special": "emblématique"
+      "pdf": "https://irda.qc.ca/media/4wzbfmu2/irda-seriesolshefford-fichesynthese-2024.pdf",
+      "region": "Estrie"
+    },
+    {
+      "id": "Sherbrooke",
+      "ordre": "Brunisol",
+      "superficie": 31772,
+      "sim": [
+        "Ascot",
+        "Greenboro"
+      ],
+      "pdf": "",
+      "region": ""
     },
     {
       "id": "Saint-Aimé",
       "ordre": "Gleysol",
-      "superficie": 15066,
+      "superficie": 15379,
       "sim": [
         "Saint-Hyacinthe",
         "Des Saults",
         "Lévrard"
       ],
-      "pdf": "https://irda.qc.ca/media/bg2g4u4t/irda-seriesolstaime-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/bg2g4u4t/irda-seriesolstaime-fichesynthese-2024.pdf",
+      "region": "Montérégie"
     },
     {
       "id": "Saint-André",
       "ordre": "Podzol",
-      "superficie": 25271,
+      "superficie": 50739,
       "sim": [
         "Saint-Nicolas",
         "Orléans"
       ],
-      "pdf": "https://irda.qc.ca/media/0gxlq5f0/irda-seriesolstandre-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/0gxlq5f0/irda-seriesolstandre-fichesynthese-2024.pdf",
+      "region": "Chaudière-Appalaches"
     },
     {
       "id": "Saint-Damase",
       "ordre": "Gleysol",
-      "superficie": 15064,
+      "superficie": 19768,
       "sim": [
         "Aston",
         "La Présentation"
       ],
-      "pdf": "https://irda.qc.ca/media/htbjw0a0/irda-seriesolstdamase-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/htbjw0a0/irda-seriesolstdamase-fichesynthese-2024.pdf",
+      "region": "Laurentides"
     },
     {
       "id": "Sainte-Marie",
       "ordre": "Gleysol",
-      "superficie": 48064,
+      "superficie": 65614,
       "sim": [
         "Brompton",
         "Woodbridge",
-        "Norbertville"
+        "Norberville"
       ],
-      "pdf": "https://irda.qc.ca/media/bx5hay5v/irda-seriesolstemarie-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/bx5hay5v/irda-seriesolstemarie-fichesynthese-2024.pdf",
+      "region": "Chaudière-Appalaches"
+    },
+    {
+      "id": "Sainte-Rosalie",
+      "ordre": "Gleysol",
+      "superficie": 197128,
+      "sim": [
+        "Saint-Urbain",
+        "Providence"
+      ],
+      "pdf": "https://irda.qc.ca/media/2uijgwkt/irda-seriesolsterosalie-fichesynthese-2024.pdf",
+      "region": "Montérégie",
+      "special": "emblématique"
     },
     {
       "id": "Saint-Hyacinthe",
       "ordre": "Gleysol",
-      "superficie": 57626,
+      "superficie": 15962,
       "sim": [
         "Saint-Aimé",
         "Richelieu"
       ],
-      "pdf": "https://irda.qc.ca/media/q3unp1o4/irda-seriesolsthyacinthe-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/q3unp1o4/irda-seriesolsthyacinthe-fichesynthese-2024.pdf",
+      "region": "Montérégie"
     },
     {
       "id": "Saint-Jude",
       "ordre": "Podzol",
-      "superficie": 15066,
+      "superficie": 111312,
       "sim": [
         "Sainte-Sophie",
         "Joseph",
         "Massueville"
       ],
-      "pdf": "https://irda.qc.ca/media/q1qjhoxz/irda-seriesolstjude-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/q1qjhoxz/irda-seriesolstjude-fichesynthese-2024.pdf",
+      "region": "Centre-du-Québec"
     },
     {
       "id": "Saint-Nicolas",
       "ordre": "Podzol",
-      "superficie": 11833,
+      "superficie": 20468,
       "sim": [
         "Saint-André",
         "Orléans"
       ],
-      "pdf": "https://irda.qc.ca/media/13pl5scv/irda-seriesolstnicolas-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/13pl5scv/irda-seriesolstnicolas-fichesynthese-2024.pdf",
+      "region": "Chaudière-Appalaches"
     },
     {
       "id": "Saint-Pascal",
       "ordre": "Gleysol",
-      "superficie": 8111,
+      "superficie": 8914,
       "sim": [
         "Kamouraska",
         "La Pocatière",
         "De l'Anse"
       ],
-      "pdf": "https://irda.qc.ca/media/raylcqwc/irda-seriesolstpascal-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/raylcqwc/irda-seriesolstpascal-fichesynthese-2024.pdf",
+      "region": "Bas-Saint-Laurent"
     },
     {
       "id": "Saint-Urbain",
       "ordre": "Gleysol",
-      "superficie": 32768,
+      "superficie": 41660,
       "sim": [
         "Sainte-Rosalie",
         "Providence"
       ],
-      "pdf": "https://irda.qc.ca/media/cdxbobct/irda-seriesolsturbain-fichesynthese-2024.pdf"
-    },
-    {
-      "id": "Shefford",
-      "ordre": "Podzol",
-      "superficie": 9753,
-      "sim": [
-        "Saint-Sébastien"
-      ],
-      "pdf": "https://irda.qc.ca/media/4wzbfmu2/irda-seriesolshefford-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/cdxbobct/irda-seriesolsturbain-fichesynthese-2024.pdf",
+      "region": "Montérégie"
     },
     {
       "id": "Taillon",
       "ordre": "Brunisol",
-      "superficie": 39967,
+      "superficie": 19135,
       "sim": [
         "Alma"
       ],
-      "pdf": "https://irda.qc.ca/media/k2oijv1d/irda-seriesoltaillon-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/k2oijv1d/irda-seriesoltaillon-fichesynthese-2024.pdf",
+      "region": "Saguenay–Lac-Saint-Jean"
+    },
+    {
+      "id": "Uplands",
+      "ordre": "Podzol",
+      "superficie": 32635,
+      "sim": [
+        "Saint-Jude"
+      ],
+      "pdf": "",
+      "region": ""
+    },
+    {
+      "id": "Valère",
+      "ordre": "Podzol",
+      "superficie": 3619,
+      "sim": [
+        "Achigan",
+        "Joseph"
+      ],
+      "pdf": "",
+      "region": ""
     },
     {
       "id": "Verchères",
       "ordre": "Organique",
-      "superficie": 827,
+      "superficie": 3332,
       "sim": [
         "Cousineau",
         "Nobel",
@@ -476,18 +803,20 @@
         "La Rabastalière",
         "Lapierre"
       ],
-      "pdf": "https://irda.qc.ca/media/ofekmmxk/irda-seriesolvercheres-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/ofekmmxk/irda-seriesolvercheres-fichesynthese-2024.pdf",
+      "region": "Montérégie"
     },
     {
       "id": "Woodbridge",
       "ordre": "Brunisol",
-      "superficie": 47251,
+      "superficie": 83230,
       "sim": [
         "Sainte-Marie",
         "Blandford",
         "Bois-Francs"
       ],
-      "pdf": "https://irda.qc.ca/media/tsyh31g0/irda-seriesolwoodbridge-fichesynthese-2024.pdf"
+      "pdf": "https://irda.qc.ca/media/tsyh31g0/irda-seriesolwoodbridge-fichesynthese-2024.pdf",
+      "region": "Chaudière-Appalaches"
     }
   ]
 }
