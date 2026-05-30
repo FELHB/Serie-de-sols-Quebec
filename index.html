@@ -28,7 +28,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;color:#2c1f0e;height:100vh;disp
 .sb{font-size:10px;padding:1px 5px;border-radius:8px;margin-left:2px;flex-shrink:0;font-weight:500}
 .se{background:#f5e6c0;color:#7a5020;border:1px solid #b5813e}
 .sm{background:#ddeaec;color:#1e3f43;border:1px solid #3d6f74}
-.spdf{font-size:11px;margin-left:auto;flex-shrink:0;opacity:0.7;title:"Fiche disponible"}
+.ss{background:#d4edda;color:#1a4a1a;border:1px solid #2d6a2d}
+.spdf{font-size:11px;margin-left:auto;flex-shrink:0;opacity:0.7}
 .sep{height:1px;background:rgba(80,55,30,0.1);margin:6px 4px}
 .sec-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#a08060;padding:8px 7px 3px}
 .si-absent{opacity:0.55;font-style:italic;cursor:default}
@@ -55,6 +56,7 @@ canvas{display:block;position:absolute;top:0;left:0}
 .pspec{margin:6px 0 8px;font-size:11.5px;padding:6px 10px;border-radius:6px;line-height:1.5}
 .pe{background:#f5e6c0;color:#7a5020;border-left:3px solid #b5813e}
 .pm{background:#ddeaec;color:#1e3f43;border-left:3px solid #3d6f74}
+.ps{background:#d4edda;color:#1a4a1a;border-left:3px solid #2d6a2d}
 .pr{font-size:12px;color:#7a6248;margin-bottom:4px}
 .pr strong{color:#2c1f0e}
 .psep{height:1px;background:rgba(80,55,30,0.1);margin:10px 0}
@@ -104,7 +106,7 @@ canvas{display:block;position:absolute;top:0;left:0}
   </div>
   <div id="carea">
     <canvas id="bg-canvas"></canvas>
-    <canvas id="main-canvas" id="c"></canvas>
+    <canvas id="main-canvas"></canvas>
     <div id="hlabel"></div>
     <div id="absent-search">
       <strong id="atitle"></strong>
@@ -127,7 +129,6 @@ canvas{display:block;position:absolute;top:0;left:0}
   <div class="leg" style="cursor:default"><span style="font-size:13px">⛏</span><span>Fiche disponible</span></div>
   <span id="hint">Clic sur bulle : détails &nbsp;|&nbsp; Clic sur ordre : description</span>
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script>
 const PAL={
@@ -139,8 +140,8 @@ const PAL={
 
 const SPECIAL_DESC={
   emblématique:`★ Sol emblématique du Québec\nLa série Sainte-Rosalie a été reconnue comme sol emblématique du Québec par l'Association québécoise de spécialistes en science du sol (AQSSS).`,
-  magique:`✦ Sol magique\nLa série De L'Anse est appelée « sol magique » par les pédologues car c'est un argile qui draine comme un sable, due à sa structure particulière unique. Ce statut a été reconnu par Félix`,
-  sapin:`🎄 Sol sapin de Noël\nLe Mawcook est surnommé « Le sol sapin de Noël » car les fragments qui le compose sont d'une grande variété de couleurs (rouge, jaune, vert,...)`,
+  magique:`✦ Sol magique\nLa série De L'Anse est appelée « sol magique » par les pédologues car c'est une argile qui draine comme un sable, due à sa structure particulaire unique. Ce statut a été reconnu par l'AQSSS.`,
+  sapin:`🎄 Sol sapin de Noël\nLe Mawcook est surnommé « sol sapin de Noël » car les fragments qui le composent sont d'une grande variété de couleurs (rouge, jaune, vert...). Ce statut a été reconnu par l'AQSSS.`,
 };
 
 const ORDRE_IMG={
@@ -169,49 +170,43 @@ const pbody=document.getElementById('pbody');
 const hl=document.getElementById('hlabel');
 const ab=document.getElementById('absent-search');
 
-// Fond ondulé
 function drawBg(){
-  const W=bgCv.width, H=bgCv.height;
+  const W=bgCv.width,H=bgCv.height;
   bgCtx.clearRect(0,0,W,H);
-  // Couches de sol avec horizons ondulés
   const layers=[
-    {y:0,    h:0.10, color:'#e8ddd0'},  // O — matière organique
-    {y:0.10, h:0.18, color:'#c8b898'},  // A — horizon humifère
-    {y:0.28, h:0.20, color:'#b89870'},  // B — horizon d'altération
-    {y:0.48, h:0.22, color:'#a07850'},  // Bm/Bf
-    {y:0.70, h:0.30, color:'#886040'},  // C — roche mère altérée
+    {y:0,   h:0.10,color:'#e8ddd0'},
+    {y:0.10,h:0.20,color:'#c8b898'},
+    {y:0.30,h:0.22,color:'#b89870'},
+    {y:0.52,h:0.24,color:'#a07850'},
+    {y:0.76,h:0.24,color:'#886040'},
   ];
   layers.forEach((l,i)=>{
-    const y0=l.y*H, y1=(l.y+l.h)*H;
+    const y0=l.y*H,y1=(l.y+l.h)*H;
     bgCtx.beginPath();
-    bgCtx.moveTo(0,y0);
-    // Bord supérieur ondulé (sauf première couche)
     if(i>0){
-      const segs=8;
+      const segs=10;
       for(let s=0;s<=segs;s++){
         const x=W*s/segs;
-        const wave=Math.sin(s*1.3+i*2.1)*14+Math.sin(s*0.7+i)*8;
+        const wave=Math.sin(s*1.2+i*2.0)*16+Math.sin(s*0.6+i*1.1)*9;
         s===0?bgCtx.moveTo(x,y0+wave):bgCtx.lineTo(x,y0+wave);
       }
+    } else {
+      bgCtx.moveTo(0,y0);
     }
-    bgCtx.lineTo(W,y1);
-    bgCtx.lineTo(0,y1);
-    bgCtx.closePath();
-    bgCtx.fillStyle=l.color;
-    bgCtx.fill();
+    bgCtx.lineTo(W,y1);bgCtx.lineTo(0,y1);bgCtx.closePath();
+    bgCtx.fillStyle=l.color;bgCtx.fill();
   });
-  // Léger bruit de texture
-  for(let i=0;i<400;i++){
-    const x=Math.random()*W, y=Math.random()*H;
-    bgCtx.fillStyle=`rgba(0,0,0,${Math.random()*0.025})`;
+  for(let i=0;i<300;i++){
+    const x=Math.random()*W,y=Math.random()*H;
+    bgCtx.fillStyle=`rgba(0,0,0,${Math.random()*0.02})`;
     bgCtx.fillRect(x,y,Math.random()*3+1,Math.random()*2+1);
   }
 }
 
 function resize(){
-  bgCv.width=ca.clientWidth; bgCv.height=ca.clientHeight;
-  cv.width=ca.clientWidth; cv.height=ca.clientHeight;
-  drawBg(); draw();
+  bgCv.width=ca.clientWidth;bgCv.height=ca.clientHeight;
+  cv.width=ca.clientWidth;cv.height=ca.clientHeight;
+  drawBg();draw();
 }
 
 function initData(series){
@@ -222,8 +217,8 @@ function initData(series){
   const cx=cv.width/2,cy=cv.height/2,oc={};
   ords.forEach((o,i)=>{const a=(2*Math.PI/ords.length)*i-Math.PI/2;oc[o]={x:cx+190*Math.cos(a),y:cy+170*Math.sin(a)};});
   const seen=new Set();edges=[];
-  const ids=new Set(series.map(d=>d.id));
-  series.forEach(d=>{(d.sim||[]).forEach(s=>{if(ids.has(s.trim())){const k=[d.id,s.trim()].sort().join('|');if(!seen.has(k)){edges.push({src:d.id,tgt:s.trim()});seen.add(k);}}});});
+  const ids=new Set(series.map(d=>d.id.trim()));
+  series.forEach(d=>{(d.sim||[]).forEach(s=>{const st=s.trim();if(ids.has(st)){const k=[d.id,st].sort().join('|');if(!seen.has(k)){edges.push({src:d.id,tgt:st});seen.add(k);}}});});
   d3.forceSimulation(nodes)
     .force('x',d3.forceX(d=>oc[d.ordre]?.x||cx).strength(.4))
     .force('y',d3.forceY(d=>oc[d.ordre]?.y||cy).strength(.4))
@@ -234,7 +229,14 @@ function initData(series){
 }
 
 const nb=id=>nodes.find(n=>n.id===id)||nodes.find(n=>n.id.trim()===id.trim());
-const tw2=(sx,sy)=>({x:(sx-T.x)/T.k,y:(sy-T.y)/T.k});
+const toWorld=(sx,sy)=>({x:(sx-T.x)/T.k,y:(sy-T.y)/T.k});
+
+function specClass(sp){
+  if(sp==='emblématique') return 'pe';
+  if(sp==='magique') return 'pm';
+  if(sp==='sapin') return 'ps';
+  return 'pe';
+}
 
 function draw(){
   ctx.clearRect(0,0,cv.width,cv.height);
@@ -270,13 +272,12 @@ function draw(){
     ctx.fillStyle=iS?'#faf7f2':p.text;
     ctx.font=`${fs}px 'Segoe UI',sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText(n.id.length>10?n.id.slice(0,9)+'…':n.id,n.x,n.y);
-    // Icône spéciale
-    if(n.special==='emblématique') star(n.x,n.y-n.r-7/T.k,5/T.k,'#b5813e','#7a5020');
-    else if(n.special==='magique') star(n.x,n.y-n.r-7/T.k,5/T.k,'#8aacb0','#3d6f74');
+    if(n.special==='emblématique') drawStar(n.x,n.y-n.r-7/T.k,5/T.k,'#b5813e','#7a5020');
+    else if(n.special==='magique') drawStar(n.x,n.y-n.r-7/T.k,5/T.k,'#8aacb0','#3d6f74');
+    else if(n.special==='sapin') drawStar(n.x,n.y-n.r-7/T.k,5/T.k,'#2d6a2d','#1a4a1a');
     ctx.globalAlpha=1;
   });
 
-  // Labels d'ordres — à l'extérieur des bulles
   const ordreList=[...new Set(DATA.map(d=>d.ordre))];
   ordreList.forEach(o=>{
     if(filterOrdre&&o!==filterOrdre)return;
@@ -288,11 +289,11 @@ function draw(){
     const labelFs=13/T.k;
     ctx.globalAlpha=sn?.35:1;
     ctx.font=`600 ${labelFs}px 'Segoe UI',sans-serif`;
-    const tw3=ctx.measureText(o+'s').width;
+    const tw=ctx.measureText(o+'s').width;
     const pad=8/T.k;
     ctx.fillStyle='rgba(250,247,242,0.88)';
     ctx.beginPath();
-    ctx.roundRect(gx-tw3/2-pad,labelY-labelFs*.85,tw3+pad*2,labelFs*1.6,5/T.k);
+    ctx.roundRect(gx-tw/2-pad,labelY-labelFs*.85,tw+pad*2,labelFs*1.6,5/T.k);
     ctx.fill();
     ctx.strokeStyle=p.stroke;ctx.lineWidth=1.2/T.k;ctx.stroke();
     ctx.fillStyle=p.stroke;ctx.textAlign='center';ctx.textBaseline='middle';
@@ -304,7 +305,7 @@ function draw(){
   document.getElementById('count').textContent=`${AS.size} série${AS.size!==1?'s':''}`;
 }
 
-function star(cx,cy,r,fill,stroke){
+function drawStar(cx,cy,r,fill,stroke){
   ctx.beginPath();
   for(let i=0;i<10;i++){const a=(i*Math.PI/5)-Math.PI/2,rd=i%2===0?r:r*.42;i===0?ctx.moveTo(cx+rd*Math.cos(a),cy+rd*Math.sin(a)):ctx.lineTo(cx+rd*Math.cos(a),cy+rd*Math.sin(a));}
   ctx.closePath();ctx.fillStyle=fill;ctx.fill();ctx.strokeStyle=stroke;ctx.lineWidth=.8/T.k;ctx.stroke();
@@ -320,7 +321,7 @@ function openPanel(n){
   if(n.special){
     const desc=SPECIAL_DESC[n.special]||'';
     const lines=desc.split('\n');
-    h+=`<div class="pspec ${n.special==='emblématique'?'pe':'pm'}"><strong>${lines[0]}</strong><br>${lines[1]}</div>`;
+    h+=`<div class="pspec ${specClass(n.special)}"><strong>${lines[0]}</strong><br>${lines[1]||''}</div>`;
   }
   h+=`<div class="pr">Superficie : <strong>${n.superficie.toLocaleString('fr-CA')} ha</strong></div>`;
   if(si.length||so.length){
@@ -328,7 +329,7 @@ function openPanel(n){
     si.forEach(s=>{
       const sn2=DATA.find(d=>d.id.trim()===s.trim());
       const hasPdf=sn2&&sn2.pdf;
-      h+=`<div class="psl" data-id="${s.trim()}" style="cursor:pointer">→ ${s.trim()}${hasPdf?' <span title="Fiche disponible">⛏</span>':''}</div>`;
+      h+=`<div class="psl" data-id="${s.trim()}">→ ${s.trim()}${hasPdf?' <span title="Fiche disponible">⛏</span>':''}</div>`;
     });
     so.forEach(s=>{h+=`<div class="psa">${s.trim()} (non répertorié)</div>`;});
   }
@@ -365,14 +366,14 @@ window.addEventListener('mousemove',e=>{
   if(drag){T.x=ts.x+(e.clientX-ds.x);T.y=ts.y+(e.clientY-ds.y);draw();return;}
   const r=cv.getBoundingClientRect(),sx=e.clientX-r.left,sy=e.clientY-r.top;
   if(sx<0||sy<0||sx>r.width||sy>r.height){hl.style.display='none';return;}
-  const{x:wx,y:wy}=tw2(sx,sy);
+  const{x:wx,y:wy}=toWorld(sx,sy);
   const hit=nodes.find(n=>{const dx=n.x-wx,dy=n.y-wy;return Math.sqrt(dx*dx+dy*dy)<n.r;});
   if(hit){
     cv.style.cursor='pointer';
     let lbl=hit.id+' — '+hit.superficie.toLocaleString('fr-CA')+' ha';
-    if(hit.special==='emblématique')lbl+=' ★ Sol emblématique';
-    else if(hit.special==='magique')lbl+=' ✦ Sol magique';
-    else if(n.special==='sapin') star(n.x,n.y-n.r-7/T.k,5/T.k,'#2d6a2d','#1a4a1a');
+    if(hit.special==='emblématique') lbl+=' ★ Sol emblématique';
+    else if(hit.special==='magique') lbl+=' ✦ Sol magique';
+    else if(hit.special==='sapin') lbl+=' 🎄 Sol sapin de Noël';
     hl.textContent=lbl;hl.style.display='block';
   } else {cv.style.cursor='grab';hl.style.display='none';}
 });
@@ -394,7 +395,7 @@ ca.addEventListener('touchmove',e=>{e.preventDefault();if(e.touches.length===1&&
 ca.addEventListener('touchend',()=>{drag=false;ltd=null;});
 
 cv.addEventListener('click',e=>{
-  const r=cv.getBoundingClientRect(),{x:wx,y:wy}=tw2(e.clientX-r.left,e.clientY-r.top);
+  const r=cv.getBoundingClientRect(),{x:wx,y:wy}=toWorld(e.clientX-r.left,e.clientY-r.top);
   const hit=nodes.find(n=>{const dx=n.x-wx,dy=n.y-wy;return Math.sqrt(dx*dx+dy*dy)<n.r;});
   if(hit){if(selected===hit.id){closePanel();}else{selected=hit.id;openPanel(hit);updateActive();draw();}}
   else{closePanel();}
@@ -419,12 +420,14 @@ document.getElementById('filter').addEventListener('change',e=>{filterOrdre=e.ta
 function buildSidebar(){
   const list=document.getElementById('slist');list.innerHTML='';
   const ids=new Set(DATA.map(d=>d.id.trim()));
-  const sp=DATA.filter(d=>d.special).sort((a,b)=>(a.special==='emblématique'?0:1)-(b.special==='emblématique'?0:1));
+  const sp=DATA.filter(d=>d.special).sort((a,b)=>{
+    const order={emblématique:0,magique:1,sapin:2};
+    return (order[a.special]??3)-(order[b.special]??3);
+  });
   const rest=DATA.filter(d=>!d.special).sort((a,b)=>a.id.localeCompare(b.id,'fr'));
   sp.forEach(d=>addItem(list,d));
   if(sp.length&&rest.length){const s=document.createElement('div');s.className='sep';list.appendChild(s);}
   rest.forEach(d=>addItem(list,d));
-  // Non répertoriés
   const allSim=new Set();
   DATA.forEach(d=>(d.sim||[]).forEach(s=>allSim.add(s.trim())));
   const absents=[...allSim].filter(s=>!ids.has(s)).sort((a,b)=>a.localeCompare(b,'fr'));
@@ -443,9 +446,9 @@ function addItem(list,d){
   const p=PAL[d.ordre]||PAL.Podzol;
   const li=document.createElement('div');li.className='si';li.dataset.id=d.id;
   let badges='';
-  if(d.special==='emblématique')badges+=`<span class="sb se">★</span>`;
-  else if(d.special==='magique')badges+=`<span class="sb sm">✦</span>`;
-  else if(d.special==='sapin')badges+=`<span class="sb" style="background:#d4edda;color:#1a4a1a;border:1px solid #2d6a2d">🎄</span>`;
+  if(d.special==='emblématique') badges+=`<span class="sb se">★</span>`;
+  else if(d.special==='magique') badges+=`<span class="sb sm">✦</span>`;
+  else if(d.special==='sapin') badges+=`<span class="sb ss">🎄</span>`;
   const pdfIcon=d.pdf?`<span class="spdf" title="Fiche disponible">⛏</span>`:'';
   li.innerHTML=`<div class="sdot" style="background:${p.fill};border:1.5px solid ${p.stroke}"></div>${d.id}${badges}${pdfIcon}`;
   li.addEventListener('click',()=>{if(selected===d.id){closePanel();}else{selected=d.id;filterOrdre='';searchStr='';document.getElementById('filter').value='';document.getElementById('search').value='';ab.style.display='none';const n=nb(d.id);if(n)openPanel(n);updateActive();draw();}});
