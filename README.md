@@ -31,6 +31,7 @@ sols-quebec/
 
 - Données : IRDA — Institut de recherche et de développement en agroenvironnement
 - Classification : Système canadien de classification des sols
+- Rapport de l’Étude sur l’état de santé des sols agricoles du Québec
 
 ## Licence
 
