@@ -6,7 +6,7 @@
       "superficie": 17125,
       "sim": [
         "Massueville",
-        "Sainte-Thomas",
+        "Saint-Thomas",
         "Joseph"
       ],
       "pdf": "https://irda.qc.ca/media/3udasu2f/irda-seriesolachigan-fichesynthese-2026.pdf"
@@ -343,7 +343,7 @@
       "pdf": "https://irda.qc.ca/media/0v5k2xxe/irda-seriesolstlaurent-fichesynthese-2026.pdf"
     },
     {
-      "id": "Ste-Rosalie",
+      "id": "Sainte-Rosalie",
       "ordre": "Gleysol",
       "superficie": 157021,
       "sim": [
@@ -354,7 +354,7 @@
       "special": "emblématique"
     },
     {
-      "id": "St-Aimé",
+      "id": "Saint-Aimé",
       "ordre": "Gleysol",
       "superficie": 15066,
       "sim": [
@@ -365,7 +365,7 @@
       "pdf": "https://irda.qc.ca/media/bg2g4u4t/irda-seriesolstaime-fichesynthese-2024.pdf"
     },
     {
-      "id": "St-André",
+      "id": "Saint-André",
       "ordre": "Podzol",
       "superficie": 25271,
       "sim": [
@@ -375,7 +375,7 @@
       "pdf": "https://irda.qc.ca/media/0gxlq5f0/irda-seriesolstandre-fichesynthese-2024.pdf"
     },
     {
-      "id": "St-Damase",
+      "id": "Saint-Damase",
       "ordre": "Gleysol",
       "superficie": 15064,
       "sim": [
@@ -385,7 +385,7 @@
       "pdf": "https://irda.qc.ca/media/htbjw0a0/irda-seriesolstdamase-fichesynthese-2024.pdf"
     },
     {
-      "id": "Ste-Marie",
+      "id": "Sainte-Marie",
       "ordre": "Gleysol",
       "superficie": 48064,
       "sim": [
@@ -396,7 +396,7 @@
       "pdf": "https://irda.qc.ca/media/bx5hay5v/irda-seriesolstemarie-fichesynthese-2024.pdf"
     },
     {
-      "id": "St-Hyacinthe",
+      "id": "Saint-Hyacinthe",
       "ordre": "Gleysol",
       "superficie": 57626,
       "sim": [
@@ -406,7 +406,7 @@
       "pdf": "https://irda.qc.ca/media/q3unp1o4/irda-seriesolsthyacinthe-fichesynthese-2024.pdf"
     },
     {
-      "id": "St-Jude",
+      "id": "Saint-Jude",
       "ordre": "Podzol",
       "superficie": 15066,
       "sim": [
@@ -417,7 +417,7 @@
       "pdf": "https://irda.qc.ca/media/q1qjhoxz/irda-seriesolstjude-fichesynthese-2024.pdf"
     },
     {
-      "id": "St-Nicolas",
+      "id": "Saint-Nicolas",
       "ordre": "Podzol",
       "superficie": 11833,
       "sim": [
@@ -427,7 +427,7 @@
       "pdf": "https://irda.qc.ca/media/13pl5scv/irda-seriesolstnicolas-fichesynthese-2024.pdf"
     },
     {
-      "id": "St-Pascal",
+      "id": "Saint-Pascal",
       "ordre": "Gleysol",
       "superficie": 8111,
       "sim": [
@@ -438,7 +438,7 @@
       "pdf": "https://irda.qc.ca/media/raylcqwc/irda-seriesolstpascal-fichesynthese-2024.pdf"
     },
     {
-      "id": "St-Urbain",
+      "id": "Saint-Urbain",
       "ordre": "Gleysol",
       "superficie": 32768,
       "sim": [
