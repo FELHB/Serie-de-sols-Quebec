@@ -35,4 +35,4 @@ sols-quebec/
 
 ## Licence
 
-Données © IRDA. Code source libre d'utilisation.
+Données © IRDA. Code source libre d'utilisation selon la licence MIT.
