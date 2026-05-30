@@ -76,7 +76,7 @@ canvas{display:block}
     <option value="Podzol">Podzols</option>
     <option value="Gleysol">Gleysols</option>
     <option value="Brunisol">Brunisols</option>
-    <option value="Humisol">Humisols</option>
+    <option value="Organique">Organique</option>
   </select>
   <span id="count"></span>
   <div id="zoom-wrap">
@@ -109,7 +109,7 @@ canvas{display:block}
   <div class="leg"><div class="ld" style="background:#c8bfa8;border:2px solid #6b5c42"></div><span>Podzols</span></div>
   <div class="leg"><div class="ld" style="background:#8aacb0;border:2px solid #3d6f74"></div><span>Gleysols</span></div>
   <div class="leg"><div class="ld" style="background:#b5813e;border:2px solid #7a5020"></div><span>Brunisols</span></div>
-  <div class="leg"><div class="ld" style="background:#6b5c4a;border:2px solid #3d3228"></div><span>Humisols</span></div>
+  <div class="leg"><div class="ld" style="background:#6b5c4a;border:2px solid #3d3228"></div><span>Organique</span></div>
   <div class="leg" style="margin-left:6px">
     <svg width="13" height="13" viewBox="0 0 14 14"><polygon points="7,1 8.8,5.5 13.5,5.5 9.8,8.5 11.2,13 7,10 2.8,13 4.2,8.5 0.5,5.5 5.2,5.5" fill="#b5813e" stroke="#7a5020" stroke-width="0.8"/></svg>
     <span>Emblématique</span>
@@ -127,7 +127,7 @@ const PAL={
   Podzol:  {fill:'#c8bfa8',stroke:'#6b5c42',text:'#3d3220',light:'#ede8df'},
   Gleysol: {fill:'#8aacb0',stroke:'#3d6f74',text:'#1e3f43',light:'#ddeaec'},
   Brunisol:{fill:'#b5813e',stroke:'#7a5020',text:'#4a2e0c',light:'#f0dfc0'},
-  Humisol: {fill:'#6b5c4a',stroke:'#3d3228',text:'#faf7f2',light:'#d4cdc4'},
+  Organique: {fill:'#6b5c4a',stroke:'#3d3228',text:'#faf7f2',light:'#d4cdc4'},
 };
 let DATA=[],nodes=[],edges=[],selected=null,filterOrdre='',searchStr='';
 let T={x:0,y:0,k:1},drag=false,ds=null,ts=null;
