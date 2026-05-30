@@ -6,26 +6,8 @@
 <title>Cartographie des sols du Québec</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:'Segoe UI',system-ui,sans-serif;
-  color:#2c1f0e;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-  /* Fond stratifié style podzol */
-  background: linear-gradient(180deg,
-    #e8dfd0 0%, #e8dfd0 8%,
-    #d4c8b0 8%, #d4c8b0 14%,
-    #c8bea8 14%, #c8bea8 22%,
-    #b8a888 22%, #b8a888 32%,
-    #a89070 32%, #a89070 42%,
-    #987860 42%, #987860 55%,
-    #8a6e58 55%, #8a6e58 70%,
-    #7a6050 70%, #7a6050 100%
-  );
-}
-#header{padding:10px 16px;background:rgba(250,247,242,0.96);border-bottom:1px solid rgba(80,55,30,0.2);flex-shrink:0;backdrop-filter:blur(4px)}
+body{font-family:'Segoe UI',system-ui,sans-serif;color:#2c1f0e;height:100vh;display:flex;flex-direction:column;overflow:hidden;background:#c8a87a}
+#header{padding:10px 16px;background:rgba(250,247,242,0.96);border-bottom:1px solid rgba(80,55,30,0.2);flex-shrink:0}
 #header h1{font-size:15px;font-weight:600}
 #header p{font-size:12px;color:#7a6248}
 #toolbar{padding:8px 12px;background:rgba(250,247,242,0.95);border-bottom:1px solid rgba(80,55,30,0.15);display:flex;gap:8px;align-items:center;flex-wrap:wrap;flex-shrink:0}
@@ -36,22 +18,26 @@ body{
 #zoom-wrap button{width:28px;height:28px;border:1px solid rgba(80,55,30,0.25);border-radius:6px;background:rgba(240,235,227,0.9);cursor:pointer;font-size:15px;color:#2c1f0e}
 #zoom-wrap button:hover{background:#e0d8cc}
 #layout{display:flex;flex:1;overflow:hidden;min-height:0}
-#sidebar{width:205px;min-width:205px;background:rgba(250,247,242,0.96);border-right:1px solid rgba(80,55,30,0.15);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
+#sidebar{width:210px;min-width:210px;background:rgba(250,247,242,0.96);border-right:1px solid rgba(80,55,30,0.15);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
 #sidebar h2{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#7a6248;padding:10px 12px 6px;border-bottom:1px solid rgba(80,55,30,0.1)}
 #slist{overflow-y:auto;flex:1;padding:4px}
-.si{display:flex;align-items:center;gap:7px;padding:5px 7px;border-radius:6px;cursor:pointer;font-size:12.5px;color:#2c1f0e;user-select:none}
+.si{display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:6px;cursor:pointer;font-size:12.5px;color:#2c1f0e;user-select:none}
 .si:hover{background:rgba(240,235,227,0.8)}
 .si.on{background:#f0dfc0;color:#4a2e0c;font-weight:500}
 .sdot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.sb{font-size:10px;padding:1px 5px;border-radius:8px;margin-left:auto;flex-shrink:0;font-weight:500}
+.sb{font-size:10px;padding:1px 5px;border-radius:8px;margin-left:2px;flex-shrink:0;font-weight:500}
 .se{background:#f5e6c0;color:#7a5020;border:1px solid #b5813e}
 .sm{background:#ddeaec;color:#1e3f43;border:1px solid #3d6f74}
+.spdf{font-size:11px;margin-left:auto;flex-shrink:0;opacity:0.7;title:"Fiche disponible"}
 .sep{height:1px;background:rgba(80,55,30,0.1);margin:6px 4px}
 .sec-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#a08060;padding:8px 7px 3px}
-.si-absent{opacity:0.6;font-style:italic}
+.si-absent{opacity:0.55;font-style:italic;cursor:default}
+.si-absent:hover{background:none}
 #carea{flex:1;position:relative;overflow:hidden;cursor:grab;min-width:0}
 #carea.grab{cursor:grabbing}
-canvas{display:block}
+canvas{display:block;position:absolute;top:0;left:0}
+#bg-canvas{z-index:0}
+#main-canvas{z-index:1}
 #hlabel{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(44,31,14,0.82);color:#faf7f2;font-size:12px;padding:3px 12px;border-radius:12px;pointer-events:none;display:none;white-space:nowrap;z-index:10}
 #absent-search{display:none;position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(250,247,242,0.97);border:1px solid rgba(80,55,30,0.25);border-radius:8px;padding:10px 14px;font-size:12px;z-index:50;min-width:260px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
 #absent-search strong{display:block;margin-bottom:5px;font-size:13px}
@@ -66,16 +52,16 @@ canvas{display:block}
 #pbody{padding:4px 14px 20px}
 .pn{font-size:17px;font-weight:600;margin-bottom:5px}
 .pb{font-size:11px;padding:2px 9px;border-radius:10px;display:inline-block;margin-bottom:8px;font-weight:500}
-.pspec{margin:6px 0 8px;font-size:11px;padding:5px 9px;border-radius:5px;font-style:italic;line-height:1.4}
-.pe{background:#f5e6c0;color:#7a5020}
-.pm{background:#ddeaec;color:#1e3f43}
+.pspec{margin:6px 0 8px;font-size:11.5px;padding:6px 10px;border-radius:6px;line-height:1.5}
+.pe{background:#f5e6c0;color:#7a5020;border-left:3px solid #b5813e}
+.pm{background:#ddeaec;color:#1e3f43;border-left:3px solid #3d6f74}
 .pr{font-size:12px;color:#7a6248;margin-bottom:4px}
 .pr strong{color:#2c1f0e}
 .psep{height:1px;background:rgba(80,55,30,0.1);margin:10px 0}
 .pst{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:#7a6248;margin-bottom:5px}
-.psl{font-size:12.5px;padding:3px 0;color:#7a5020;cursor:pointer;display:block}
+.psl{font-size:12.5px;padding:3px 0;color:#7a5020;cursor:pointer;display:flex;align-items:center;gap:4px}
 .psl:hover{text-decoration:underline}
-.psa{font-size:11px;color:#7a6248;padding:2px 0}
+.psa{font-size:11px;color:#7a6248;padding:2px 0;font-style:italic}
 .ppdf{display:block;margin-top:14px;text-align:center;font-size:13px;font-weight:500;color:#3d6f74;text-decoration:none;border:1px solid #3d6f74;border-radius:6px;padding:8px 12px}
 .ppdf:hover{background:#ddeaec}
 .ordre-desc{font-size:12.5px;line-height:1.7;color:#3d3220;margin-top:6px}
@@ -117,7 +103,8 @@ canvas{display:block}
     <div id="slist"></div>
   </div>
   <div id="carea">
-    <canvas id="c"></canvas>
+    <canvas id="bg-canvas"></canvas>
+    <canvas id="main-canvas" id="c"></canvas>
     <div id="hlabel"></div>
     <div id="absent-search">
       <strong id="atitle"></strong>
@@ -136,13 +123,8 @@ canvas{display:block}
   <div class="leg ordre-leg" data-ordre="Gleysol"><div class="ld" style="background:#8aacb0;border:2px solid #3d6f74"></div><span>Gleysols</span></div>
   <div class="leg ordre-leg" data-ordre="Brunisol"><div class="ld" style="background:#b5813e;border:2px solid #7a5020"></div><span>Brunisols</span></div>
   <div class="leg ordre-leg" data-ordre="Organique"><div class="ld" style="background:#6b5c4a;border:2px solid #3d3228"></div><span>Organiques</span></div>
-  <div class="leg" style="margin-left:4px">
-    <svg width="13" height="13" viewBox="0 0 14 14"><polygon points="7,1 8.8,5.5 13.5,5.5 9.8,8.5 11.2,13 7,10 2.8,13 4.2,8.5 0.5,5.5 5.2,5.5" fill="#b5813e" stroke="#7a5020" stroke-width="0.8"/></svg><span>Emblématique</span>
-  </div>
-  <div class="leg">
-    <svg width="13" height="13" viewBox="0 0 14 14"><polygon points="7,1 8.8,5.5 13.5,5.5 9.8,8.5 11.2,13 7,10 2.8,13 4.2,8.5 0.5,5.5 5.2,5.5" fill="#8aacb0" stroke="#3d6f74" stroke-width="0.8"/></svg><span>Magique</span>
-  </div>
-  <div class="leg"><svg width="22" height="8"><line x1="0" y1="4" x2="22" y2="4" stroke="rgba(107,92,74,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/></svg><span>Similaires</span></div>
+  <div class="leg" style="margin-left:4px;cursor:default"><svg width="22" height="8"><line x1="0" y1="4" x2="22" y2="4" stroke="rgba(107,92,74,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/></svg><span>Similaires</span></div>
+  <div class="leg" style="cursor:default"><span style="font-size:13px">⛏</span><span>Fiche disponible</span></div>
   <span id="hint">Clic sur bulle : détails &nbsp;|&nbsp; Clic sur ordre : description</span>
 </div>
 
@@ -153,6 +135,11 @@ const PAL={
   Gleysol:  {fill:'#8aacb0',stroke:'#3d6f74',text:'#1e3f43',light:'#ddeaec'},
   Brunisol: {fill:'#b5813e',stroke:'#7a5020',text:'#4a2e0c',light:'#f0dfc0'},
   Organique:{fill:'#6b5c4a',stroke:'#3d3228',text:'#faf7f2',light:'#d4cdc4'},
+};
+
+const SPECIAL_DESC={
+  emblématique:`★ Sol emblématique du Québec\nLa série Sainte-Rosalie a été reconnue comme sol emblématique du Québec par l'Association québécoise de spécialistes en science du sol (AQSSS).`,
+  magique:`✦ Sol magique\nLa série De L'Anse est appelée « sol magique » par les pédologues car c'est une argile qui draine comme un sable, due à sa structure particulaire unique. Ce statut a été reconnu par l'AQSSS.`,
 };
 
 const ORDRE_IMG={
@@ -171,7 +158,9 @@ const ORDRE_DESC={
 
 let DATA=[],nodes=[],edges=[],selected=null,filterOrdre='',searchStr='';
 let T={x:0,y:0,k:1},drag=false,ds=null,ts=null;
-const cv=document.getElementById('c');
+const bgCv=document.getElementById('bg-canvas');
+const bgCtx=bgCv.getContext('2d');
+const cv=document.getElementById('main-canvas');
 const ctx=cv.getContext('2d');
 const ca=document.getElementById('carea');
 const panel=document.getElementById('panel');
@@ -179,7 +168,50 @@ const pbody=document.getElementById('pbody');
 const hl=document.getElementById('hlabel');
 const ab=document.getElementById('absent-search');
 
-function resize(){cv.width=ca.clientWidth;cv.height=ca.clientHeight;draw();}
+// Fond ondulé
+function drawBg(){
+  const W=bgCv.width, H=bgCv.height;
+  bgCtx.clearRect(0,0,W,H);
+  // Couches de sol avec horizons ondulés
+  const layers=[
+    {y:0,    h:0.10, color:'#e8ddd0'},  // O — matière organique
+    {y:0.10, h:0.18, color:'#c8b898'},  // A — horizon humifère
+    {y:0.28, h:0.20, color:'#b89870'},  // B — horizon d'altération
+    {y:0.48, h:0.22, color:'#a07850'},  // Bm/Bf
+    {y:0.70, h:0.30, color:'#886040'},  // C — roche mère altérée
+  ];
+  layers.forEach((l,i)=>{
+    const y0=l.y*H, y1=(l.y+l.h)*H;
+    bgCtx.beginPath();
+    bgCtx.moveTo(0,y0);
+    // Bord supérieur ondulé (sauf première couche)
+    if(i>0){
+      const segs=8;
+      for(let s=0;s<=segs;s++){
+        const x=W*s/segs;
+        const wave=Math.sin(s*1.3+i*2.1)*14+Math.sin(s*0.7+i)*8;
+        s===0?bgCtx.moveTo(x,y0+wave):bgCtx.lineTo(x,y0+wave);
+      }
+    }
+    bgCtx.lineTo(W,y1);
+    bgCtx.lineTo(0,y1);
+    bgCtx.closePath();
+    bgCtx.fillStyle=l.color;
+    bgCtx.fill();
+  });
+  // Léger bruit de texture
+  for(let i=0;i<400;i++){
+    const x=Math.random()*W, y=Math.random()*H;
+    bgCtx.fillStyle=`rgba(0,0,0,${Math.random()*0.025})`;
+    bgCtx.fillRect(x,y,Math.random()*3+1,Math.random()*2+1);
+  }
+}
+
+function resize(){
+  bgCv.width=ca.clientWidth; bgCv.height=ca.clientHeight;
+  cv.width=ca.clientWidth; cv.height=ca.clientHeight;
+  drawBg(); draw();
+}
 
 function initData(series){
   DATA=series;
@@ -187,10 +219,10 @@ function initData(series){
   nodes=series.map(d=>({...d,r:9+32*Math.sqrt(d.superficie/maxS),x:cv.width/2+(Math.random()-.5)*200,y:cv.height/2+(Math.random()-.5)*200}));
   const ords=[...new Set(series.map(d=>d.ordre))];
   const cx=cv.width/2,cy=cv.height/2,oc={};
-  ords.forEach((o,i)=>{const a=(2*Math.PI/ords.length)*i-Math.PI/2;oc[o]={x:cx+170*Math.cos(a),y:cy+155*Math.sin(a)};});
+  ords.forEach((o,i)=>{const a=(2*Math.PI/ords.length)*i-Math.PI/2;oc[o]={x:cx+190*Math.cos(a),y:cy+170*Math.sin(a)};});
   const seen=new Set();edges=[];
   const ids=new Set(series.map(d=>d.id));
-  series.forEach(d=>{(d.sim||[]).forEach(s=>{if(ids.has(s)){const k=[d.id,s].sort().join('|');if(!seen.has(k)){edges.push({src:d.id,tgt:s});seen.add(k);}}});});
+  series.forEach(d=>{(d.sim||[]).forEach(s=>{if(ids.has(s.trim())){const k=[d.id,s.trim()].sort().join('|');if(!seen.has(k)){edges.push({src:d.id,tgt:s.trim()});seen.add(k);}}});});
   d3.forceSimulation(nodes)
     .force('x',d3.forceX(d=>oc[d.ordre]?.x||cx).strength(.4))
     .force('y',d3.forceY(d=>oc[d.ordre]?.y||cy).strength(.4))
@@ -200,8 +232,8 @@ function initData(series){
   buildSidebar();
 }
 
-const nb=id=>nodes.find(n=>n.id===id);
-const tw=(sx,sy)=>({x:(sx-T.x)/T.k,y:(sy-T.y)/T.k});
+const nb=id=>nodes.find(n=>n.id===id)||nodes.find(n=>n.id.trim()===id.trim());
+const tw2=(sx,sy)=>({x:(sx-T.x)/T.k,y:(sy-T.y)/T.k});
 
 function draw(){
   ctx.clearRect(0,0,cv.width,cv.height);
@@ -213,9 +245,8 @@ function draw(){
   }).map(n=>n.id));
   const sn=selected?nb(selected):null;
   const lk=new Set();
-  if(sn)edges.forEach(e=>{if(e.src===selected)lk.add(e.tgt);if(e.tgt===selected)lk.add(e.src);});
+  if(sn)edges.forEach(e=>{if(e.src===sn.id)lk.add(e.tgt);if(e.tgt===sn.id)lk.add(e.src);});
 
-  // Arêtes
   edges.forEach(e=>{
     const a=nb(e.src),b=nb(e.tgt);
     if(!a||!b||!AS.has(a.id)||!AS.has(b.id))return;
@@ -226,11 +257,10 @@ function draw(){
     ctx.setLineDash(h?[]:[4/T.k,3/T.k]);ctx.stroke();ctx.setLineDash([]);
   });
 
-  // Bulles
   nodes.forEach(n=>{
     if(!AS.has(n.id))return;
     const p=PAL[n.ordre]||PAL.Podzol;
-    const iS=selected===n.id,iL=lk.has(n.id),dm=sn&&!iS&&!iL;
+    const iS=sn&&sn.id===n.id,iL=lk.has(n.id),dm=sn&&!iS&&!iL;
     ctx.globalAlpha=dm?.25:1;
     ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,2*Math.PI);
     ctx.fillStyle=iS?p.stroke:p.fill;ctx.fill();
@@ -239,37 +269,33 @@ function draw(){
     ctx.fillStyle=iS?'#faf7f2':p.text;
     ctx.font=`${fs}px 'Segoe UI',sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText(n.id.length>10?n.id.slice(0,9)+'…':n.id,n.x,n.y);
-    if(n.special==='emblématique')star(n.x,n.y-n.r-7/T.k,5/T.k,'#b5813e','#7a5020');
-    else if(n.special==='magique')star(n.x,n.y-n.r-7/T.k,5/T.k,'#8aacb0','#3d6f74');
+    // Icône spéciale
+    if(n.special==='emblématique') star(n.x,n.y-n.r-7/T.k,5/T.k,'#b5813e','#7a5020');
+    else if(n.special==='magique') star(n.x,n.y-n.r-7/T.k,5/T.k,'#8aacb0','#3d6f74');
     ctx.globalAlpha=1;
   });
 
-  // Labels d'ordres — à l'extérieur des bulles, bien visibles
+  // Labels d'ordres — à l'extérieur des bulles
   const ordreList=[...new Set(DATA.map(d=>d.ordre))];
   ordreList.forEach(o=>{
     if(filterOrdre&&o!==filterOrdre)return;
-    const g=nodes.filter(n=>AS.has(n.id)&&n.ordre===o);
-    if(!g.length)return;
+    const g=nodes.filter(n=>AS.has(n.id)&&n.ordre===o);if(!g.length)return;
     const p=PAL[o]||PAL.Podzol;
     const gx=d3.mean(g,n=>n.x);
     const gyMin=d3.min(g,n=>n.y-n.r);
-    const labelY=gyMin-22/T.k;
-    const labelFs=14/T.k;
-    ctx.globalAlpha=sn?.4:1;
-    // Fond semi-transparent derrière le label
+    const labelY=gyMin-24/T.k;
+    const labelFs=13/T.k;
+    ctx.globalAlpha=sn?.35:1;
     ctx.font=`600 ${labelFs}px 'Segoe UI',sans-serif`;
-    const tw2=ctx.measureText(o+'s').width;
-    ctx.fillStyle='rgba(250,247,242,0.82)';
+    const tw3=ctx.measureText(o+'s').width;
+    const pad=8/T.k;
+    ctx.fillStyle='rgba(250,247,242,0.88)';
     ctx.beginPath();
-    ctx.roundRect(gx-tw2/2-6/T.k, labelY-labelFs*.8, tw2+12/T.k, labelFs*1.5, 4/T.k);
+    ctx.roundRect(gx-tw3/2-pad,labelY-labelFs*.85,tw3+pad*2,labelFs*1.6,5/T.k);
     ctx.fill();
-    ctx.strokeStyle=p.stroke;
-    ctx.lineWidth=1/T.k;
-    ctx.stroke();
-    // Texte
-    ctx.fillStyle=p.stroke;
-    ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText(o+'s',gx,labelY-labelFs*.05);
+    ctx.strokeStyle=p.stroke;ctx.lineWidth=1.2/T.k;ctx.stroke();
+    ctx.fillStyle=p.stroke;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(o+'s',gx,labelY+labelFs*.05);
     ctx.globalAlpha=1;
   });
 
@@ -285,17 +311,25 @@ function star(cx,cy,r,fill,stroke){
 
 function openPanel(n){
   const p=PAL[n.ordre]||PAL.Podzol;
-  const ids=new Set(DATA.map(d=>d.id));
-  const si=(n.sim||[]).filter(s=>ids.has(s)),so=(n.sim||[]).filter(s=>!ids.has(s));
+  const ids=new Set(DATA.map(d=>d.id.trim()));
+  const si=(n.sim||[]).filter(s=>ids.has(s.trim()));
+  const so=(n.sim||[]).filter(s=>!ids.has(s.trim()));
   let h=`<div class="pn">${n.id}</div>`;
   h+=`<span class="pb" style="background:${p.light};color:${p.text}">${n.ordre}</span>`;
-  if(n.special==='emblématique')h+=`<div class="pspec pe">★ Sol emblématique du Québec</div>`;
-  if(n.special==='magique')h+=`<div class="pspec pm">✦ Sol magique</div>`;
+  if(n.special){
+    const desc=SPECIAL_DESC[n.special]||'';
+    const lines=desc.split('\n');
+    h+=`<div class="pspec ${n.special==='emblématique'?'pe':'pm'}"><strong>${lines[0]}</strong><br>${lines[1]}</div>`;
+  }
   h+=`<div class="pr">Superficie : <strong>${n.superficie.toLocaleString('fr-CA')} ha</strong></div>`;
   if(si.length||so.length){
     h+=`<div class="psep"></div><div class="pst">Séries similaires</div>`;
-    si.forEach(s=>{h+=`<a class="psl" data-id="${s}">→ ${s}</a>`;});
-    so.forEach(s=>{h+=`<div class="psa">${s} <span style="font-size:10px">(non répertorié)</span></div>`;});
+    si.forEach(s=>{
+      const sn2=DATA.find(d=>d.id.trim()===s.trim());
+      const hasPdf=sn2&&sn2.pdf;
+      h+=`<div class="psl" data-id="${s.trim()}" style="cursor:pointer">→ ${s.trim()}${hasPdf?' <span title="Fiche disponible">⛏</span>':''}</div>`;
+    });
+    so.forEach(s=>{h+=`<div class="psa">${s.trim()} (non répertorié)</div>`;});
   }
   if(n.pdf)h+=`<a href="${n.pdf}" target="_blank" rel="noopener" class="ppdf">Fiche technique IRDA →</a>`;
   pbody.innerHTML=h;
@@ -315,8 +349,7 @@ function openOrdrePanel(ordre){
     h+=`<img src="${ORDRE_IMG[ordre]}" alt="Profil de sol — ${ordre}" class="ordre-img"/>`;
     h+=`<div class="credit">© IRDA — Institut de recherche et de développement en agroenvironnement</div>`;
   }
-  h+=`<div class="psep"></div>`;
-  h+=`<div class="ordre-desc">${ORDRE_DESC[ordre]||''}</div>`;
+  h+=`<div class="psep"></div><div class="ordre-desc">${ORDRE_DESC[ordre]||''}</div>`;
   pbody.innerHTML=h;
   panel.classList.add('show');
   selected=null;updateActive();draw();
@@ -324,21 +357,22 @@ function openOrdrePanel(ordre){
 
 function closePanel(){panel.classList.remove('show');selected=null;updateActive();draw();}
 document.getElementById('px').addEventListener('click',closePanel);
+document.querySelectorAll('.ordre-leg').forEach(el=>{el.addEventListener('click',()=>openOrdrePanel(el.dataset.ordre));});
 
-document.querySelectorAll('.ordre-leg').forEach(el=>{
-  el.addEventListener('click',()=>openOrdrePanel(el.dataset.ordre));
-});
-
-// Pan & zoom
 ca.addEventListener('mousedown',e=>{if(e.target!==cv)return;drag=true;ds={x:e.clientX,y:e.clientY};ts={...T};ca.classList.add('grab');});
 window.addEventListener('mousemove',e=>{
   if(drag){T.x=ts.x+(e.clientX-ds.x);T.y=ts.y+(e.clientY-ds.y);draw();return;}
   const r=cv.getBoundingClientRect(),sx=e.clientX-r.left,sy=e.clientY-r.top;
   if(sx<0||sy<0||sx>r.width||sy>r.height){hl.style.display='none';return;}
-  const{x:wx,y:wy}=tw(sx,sy);
+  const{x:wx,y:wy}=tw2(sx,sy);
   const hit=nodes.find(n=>{const dx=n.x-wx,dy=n.y-wy;return Math.sqrt(dx*dx+dy*dy)<n.r;});
-  if(hit){cv.style.cursor='pointer';hl.textContent=hit.id+' — '+hit.superficie.toLocaleString('fr-CA')+' ha';hl.style.display='block';}
-  else{cv.style.cursor='grab';hl.style.display='none';}
+  if(hit){
+    cv.style.cursor='pointer';
+    let lbl=hit.id+' — '+hit.superficie.toLocaleString('fr-CA')+' ha';
+    if(hit.special==='emblématique')lbl+=' ★ Sol emblématique';
+    else if(hit.special==='magique')lbl+=' ✦ Sol magique';
+    hl.textContent=lbl;hl.style.display='block';
+  } else {cv.style.cursor='grab';hl.style.display='none';}
 });
 window.addEventListener('mouseup',()=>{drag=false;ca.classList.remove('grab');});
 ca.addEventListener('wheel',e=>{
@@ -358,7 +392,7 @@ ca.addEventListener('touchmove',e=>{e.preventDefault();if(e.touches.length===1&&
 ca.addEventListener('touchend',()=>{drag=false;ltd=null;});
 
 cv.addEventListener('click',e=>{
-  const r=cv.getBoundingClientRect(),{x:wx,y:wy}=tw(e.clientX-r.left,e.clientY-r.top);
+  const r=cv.getBoundingClientRect(),{x:wx,y:wy}=tw2(e.clientX-r.left,e.clientY-r.top);
   const hit=nodes.find(n=>{const dx=n.x-wx,dy=n.y-wy;return Math.sqrt(dx*dx+dy*dy)<n.r;});
   if(hit){if(selected===hit.id){closePanel();}else{selected=hit.id;openPanel(hit);updateActive();draw();}}
   else{closePanel();}
@@ -382,20 +416,15 @@ document.getElementById('filter').addEventListener('change',e=>{filterOrdre=e.ta
 
 function buildSidebar(){
   const list=document.getElementById('slist');list.innerHTML='';
-  const ids=new Set(DATA.map(d=>d.id));
-
-  // Sols spéciaux
+  const ids=new Set(DATA.map(d=>d.id.trim()));
   const sp=DATA.filter(d=>d.special).sort((a,b)=>(a.special==='emblématique'?0:1)-(b.special==='emblématique'?0:1));
-  // Sols répertoriés normaux
   const rest=DATA.filter(d=>!d.special).sort((a,b)=>a.id.localeCompare(b.id,'fr'));
-
-  sp.forEach(d=>addItem(list,d,false));
+  sp.forEach(d=>addItem(list,d));
   if(sp.length&&rest.length){const s=document.createElement('div');s.className='sep';list.appendChild(s);}
-  rest.forEach(d=>addItem(list,d,false));
-
-  // Sols non répertoriés (dans sim mais pas dans DATA)
+  rest.forEach(d=>addItem(list,d));
+  // Non répertoriés
   const allSim=new Set();
-  DATA.forEach(d=>(d.sim||[]).forEach(s=>allSim.add(s)));
+  DATA.forEach(d=>(d.sim||[]).forEach(s=>allSim.add(s.trim())));
   const absents=[...allSim].filter(s=>!ids.has(s)).sort((a,b)=>a.localeCompare(b,'fr'));
   if(absents.length){
     const sep=document.createElement('div');sep.className='sep';list.appendChild(sep);
@@ -411,8 +440,11 @@ function buildSidebar(){
 function addItem(list,d){
   const p=PAL[d.ordre]||PAL.Podzol;
   const li=document.createElement('div');li.className='si';li.dataset.id=d.id;
-  let b='';if(d.special==='emblématique')b=`<span class="sb se">★</span>`;else if(d.special==='magique')b=`<span class="sb sm">✦</span>`;
-  li.innerHTML=`<div class="sdot" style="background:${p.fill};border:1.5px solid ${p.stroke}"></div>${d.id}${b}`;
+  let badges='';
+  if(d.special==='emblématique')badges+=`<span class="sb se">★</span>`;
+  else if(d.special==='magique')badges+=`<span class="sb sm">✦</span>`;
+  const pdfIcon=d.pdf?`<span class="spdf" title="Fiche disponible">⛏</span>`:'';
+  li.innerHTML=`<div class="sdot" style="background:${p.fill};border:1.5px solid ${p.stroke}"></div>${d.id}${badges}${pdfIcon}`;
   li.addEventListener('click',()=>{if(selected===d.id){closePanel();}else{selected=d.id;filterOrdre='';searchStr='';document.getElementById('filter').value='';document.getElementById('search').value='';ab.style.display='none';const n=nb(d.id);if(n)openPanel(n);updateActive();draw();}});
   list.appendChild(li);
 }
