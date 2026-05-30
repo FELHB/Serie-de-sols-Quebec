@@ -253,7 +253,6 @@
       "sim": [
         "Chaloupe",
         "Saint-Aimé",
-        "Des Sault",
         "Le Bras"
       ],
       "pdf": "",
@@ -387,7 +386,7 @@
       "ordre": "Gleysol",
       "superficie": 20415,
       "sim": [
-        "Des Sault",
+        "Des Saults",
         "Saint-Hyacinthe",
         "Saint-Aimé"
       ],
@@ -619,7 +618,7 @@
       "ordre": "Gleysol",
       "superficie": 16712,
       "sim": [
-        "Du jour",
+        "Du Jour",
         "Saint-Marcel"
       ],
       "pdf": "https://irda.qc.ca/media/0v5k2xxe/irda-seriesolstlaurent-fichesynthese-2026.pdf",
