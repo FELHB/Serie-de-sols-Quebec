@@ -6,43 +6,63 @@
 <title>Cartographie des sols du Québec</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0ebe3;color:#2c1f0e;height:100vh;display:flex;flex-direction:column;overflow:hidden}
-#header{padding:10px 16px;background:#faf7f2;border-bottom:1px solid rgba(80,55,30,0.15);flex-shrink:0}
+body{
+  font-family:'Segoe UI',system-ui,sans-serif;
+  color:#2c1f0e;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  /* Fond stratifié style podzol */
+  background: linear-gradient(180deg,
+    #e8dfd0 0%, #e8dfd0 8%,
+    #d4c8b0 8%, #d4c8b0 14%,
+    #c8bea8 14%, #c8bea8 22%,
+    #b8a888 22%, #b8a888 32%,
+    #a89070 32%, #a89070 42%,
+    #987860 42%, #987860 55%,
+    #8a6e58 55%, #8a6e58 70%,
+    #7a6050 70%, #7a6050 100%
+  );
+}
+#header{padding:10px 16px;background:rgba(250,247,242,0.96);border-bottom:1px solid rgba(80,55,30,0.2);flex-shrink:0;backdrop-filter:blur(4px)}
 #header h1{font-size:15px;font-weight:600}
 #header p{font-size:12px;color:#7a6248}
-#toolbar{padding:8px 12px;background:#faf7f2;border-bottom:1px solid rgba(80,55,30,0.15);display:flex;gap:8px;align-items:center;flex-wrap:wrap;flex-shrink:0}
-#toolbar input,#toolbar select{font-size:13px;padding:5px 10px;border:1px solid rgba(80,55,30,0.25);border-radius:6px;background:#f0ebe3;color:#2c1f0e;outline:none}
+#toolbar{padding:8px 12px;background:rgba(250,247,242,0.95);border-bottom:1px solid rgba(80,55,30,0.15);display:flex;gap:8px;align-items:center;flex-wrap:wrap;flex-shrink:0}
+#toolbar input,#toolbar select{font-size:13px;padding:5px 10px;border:1px solid rgba(80,55,30,0.25);border-radius:6px;background:rgba(240,235,227,0.9);color:#2c1f0e;outline:none}
 #toolbar input{width:200px}
 #count{font-size:12px;color:#7a6248;margin-left:4px}
 #zoom-wrap{margin-left:auto;display:flex;gap:4px}
-#zoom-wrap button{width:28px;height:28px;border:1px solid rgba(80,55,30,0.25);border-radius:6px;background:#f0ebe3;cursor:pointer;font-size:15px;color:#2c1f0e}
+#zoom-wrap button{width:28px;height:28px;border:1px solid rgba(80,55,30,0.25);border-radius:6px;background:rgba(240,235,227,0.9);cursor:pointer;font-size:15px;color:#2c1f0e}
 #zoom-wrap button:hover{background:#e0d8cc}
 #layout{display:flex;flex:1;overflow:hidden;min-height:0}
-#sidebar{width:195px;min-width:195px;background:#faf7f2;border-right:1px solid rgba(80,55,30,0.15);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
+#sidebar{width:205px;min-width:205px;background:rgba(250,247,242,0.96);border-right:1px solid rgba(80,55,30,0.15);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
 #sidebar h2{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#7a6248;padding:10px 12px 6px;border-bottom:1px solid rgba(80,55,30,0.1)}
 #slist{overflow-y:auto;flex:1;padding:4px}
 .si{display:flex;align-items:center;gap:7px;padding:5px 7px;border-radius:6px;cursor:pointer;font-size:12.5px;color:#2c1f0e;user-select:none}
-.si:hover{background:#f0ebe3}
+.si:hover{background:rgba(240,235,227,0.8)}
 .si.on{background:#f0dfc0;color:#4a2e0c;font-weight:500}
 .sdot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .sb{font-size:10px;padding:1px 5px;border-radius:8px;margin-left:auto;flex-shrink:0;font-weight:500}
 .se{background:#f5e6c0;color:#7a5020;border:1px solid #b5813e}
 .sm{background:#ddeaec;color:#1e3f43;border:1px solid #3d6f74}
 .sep{height:1px;background:rgba(80,55,30,0.1);margin:6px 4px}
+.sec-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#a08060;padding:8px 7px 3px}
+.si-absent{opacity:0.6;font-style:italic}
 #carea{flex:1;position:relative;overflow:hidden;cursor:grab;min-width:0}
 #carea.grab{cursor:grabbing}
 canvas{display:block}
-#hlabel{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(44,31,14,0.78);color:#faf7f2;font-size:12px;padding:3px 12px;border-radius:12px;pointer-events:none;display:none;white-space:nowrap;z-index:10}
-#absent{display:none;position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:#faf7f2;border:1px solid rgba(80,55,30,0.25);border-radius:8px;padding:10px 14px;font-size:12px;z-index:50;min-width:260px}
-#absent strong{display:block;margin-bottom:5px;font-size:13px}
-#absent ul{list-style:none}
-#absent li{padding:3px 0}
-#absent a{color:#7a5020;cursor:pointer;text-decoration:underline}
-#panel{width:240px;min-width:240px;background:#faf7f2;border-left:1px solid rgba(80,55,30,0.15);display:none;flex-direction:column;flex-shrink:0;overflow-y:auto}
+#hlabel{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(44,31,14,0.82);color:#faf7f2;font-size:12px;padding:3px 12px;border-radius:12px;pointer-events:none;display:none;white-space:nowrap;z-index:10}
+#absent-search{display:none;position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(250,247,242,0.97);border:1px solid rgba(80,55,30,0.25);border-radius:8px;padding:10px 14px;font-size:12px;z-index:50;min-width:260px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+#absent-search strong{display:block;margin-bottom:5px;font-size:13px}
+#absent-search ul{list-style:none}
+#absent-search li{padding:3px 0}
+#absent-search a{color:#7a5020;cursor:pointer;text-decoration:underline}
+#panel{width:260px;min-width:260px;background:rgba(250,247,242,0.97);border-left:1px solid rgba(80,55,30,0.15);display:none;flex-direction:column;flex-shrink:0;overflow-y:auto}
 #panel.show{display:flex}
 #pclose{text-align:right;padding:8px 10px 0}
 #pclose button{background:none;border:none;cursor:pointer;font-size:17px;color:#7a6248;padding:2px 6px;border-radius:4px}
-#pclose button:hover{background:#f0ebe3}
+#pclose button:hover{background:rgba(240,235,227,0.8)}
 #pbody{padding:4px 14px 20px}
 .pn{font-size:17px;font-weight:600;margin-bottom:5px}
 .pb{font-size:11px;padding:2px 9px;border-radius:10px;display:inline-block;margin-bottom:8px;font-weight:500}
@@ -58,10 +78,13 @@ canvas{display:block}
 .psa{font-size:11px;color:#7a6248;padding:2px 0}
 .ppdf{display:block;margin-top:14px;text-align:center;font-size:13px;font-weight:500;color:#3d6f74;text-decoration:none;border:1px solid #3d6f74;border-radius:6px;padding:8px 12px}
 .ppdf:hover{background:#ddeaec}
-.ordre-desc{font-size:12.5px;line-height:1.7;color:#3d3220;margin-top:4px}
-#legend{padding:6px 12px;background:#faf7f2;border-top:1px solid rgba(80,55,30,0.15);display:flex;gap:12px;flex-wrap:wrap;align-items:center;flex-shrink:0}
-.leg{display:flex;align-items:center;gap:5px;font-size:11.5px;color:#7a6248;cursor:pointer;padding:2px 5px;border-radius:5px;transition:background .12s}
-.leg:hover{background:#f0ebe3}
+.ordre-desc{font-size:12.5px;line-height:1.7;color:#3d3220;margin-top:6px}
+.ordre-img{width:100%;border-radius:6px;margin:10px 0 4px;display:block}
+.credit{font-size:10px;color:#a08060;text-align:center;margin-bottom:8px}
+#legend{padding:6px 12px;background:rgba(250,247,242,0.95);border-top:1px solid rgba(80,55,30,0.15);display:flex;gap:10px;flex-wrap:wrap;align-items:center;flex-shrink:0}
+.leg{display:flex;align-items:center;gap:5px;font-size:11.5px;color:#7a6248}
+.leg.ordre-leg{cursor:pointer;padding:2px 5px;border-radius:5px;transition:background .12s}
+.leg.ordre-leg:hover{background:rgba(240,235,227,0.8)}
 .leg.ordre-leg span{text-decoration:underline dotted;color:#4a2e0c}
 .ld{width:12px;height:12px;border-radius:50%;flex-shrink:0}
 #hint{font-size:11px;color:#7a6248;margin-left:auto}
@@ -96,7 +119,7 @@ canvas{display:block}
   <div id="carea">
     <canvas id="c"></canvas>
     <div id="hlabel"></div>
-    <div id="absent">
+    <div id="absent-search">
       <strong id="atitle"></strong>
       <p style="color:#7a6248;margin-bottom:5px">Sol non répertorié. Séries similaires :</p>
       <ul id="alist"></ul>
@@ -113,15 +136,16 @@ canvas{display:block}
   <div class="leg ordre-leg" data-ordre="Gleysol"><div class="ld" style="background:#8aacb0;border:2px solid #3d6f74"></div><span>Gleysols</span></div>
   <div class="leg ordre-leg" data-ordre="Brunisol"><div class="ld" style="background:#b5813e;border:2px solid #7a5020"></div><span>Brunisols</span></div>
   <div class="leg ordre-leg" data-ordre="Organique"><div class="ld" style="background:#6b5c4a;border:2px solid #3d3228"></div><span>Organiques</span></div>
-  <div class="leg" style="margin-left:6px;cursor:default">
+  <div class="leg" style="margin-left:4px">
     <svg width="13" height="13" viewBox="0 0 14 14"><polygon points="7,1 8.8,5.5 13.5,5.5 9.8,8.5 11.2,13 7,10 2.8,13 4.2,8.5 0.5,5.5 5.2,5.5" fill="#b5813e" stroke="#7a5020" stroke-width="0.8"/></svg><span>Emblématique</span>
   </div>
-  <div class="leg" style="cursor:default">
+  <div class="leg">
     <svg width="13" height="13" viewBox="0 0 14 14"><polygon points="7,1 8.8,5.5 13.5,5.5 9.8,8.5 11.2,13 7,10 2.8,13 4.2,8.5 0.5,5.5 5.2,5.5" fill="#8aacb0" stroke="#3d6f74" stroke-width="0.8"/></svg><span>Magique</span>
   </div>
-  <div class="leg" style="cursor:default"><svg width="22" height="8"><line x1="0" y1="4" x2="22" y2="4" stroke="rgba(107,92,74,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/></svg><span>Similaires</span></div>
-  <span id="hint">Survol : nom &nbsp;|&nbsp; Clic : détails &nbsp;|&nbsp; Ordres cliquables pour description</span>
+  <div class="leg"><svg width="22" height="8"><line x1="0" y1="4" x2="22" y2="4" stroke="rgba(107,92,74,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/></svg><span>Similaires</span></div>
+  <span id="hint">Clic sur bulle : détails &nbsp;|&nbsp; Clic sur ordre : description</span>
 </div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script>
 const PAL={
@@ -129,6 +153,13 @@ const PAL={
   Gleysol:  {fill:'#8aacb0',stroke:'#3d6f74',text:'#1e3f43',light:'#ddeaec'},
   Brunisol: {fill:'#b5813e',stroke:'#7a5020',text:'#4a2e0c',light:'#f0dfc0'},
   Organique:{fill:'#6b5c4a',stroke:'#3d3228',text:'#faf7f2',light:'#d4cdc4'},
+};
+
+const ORDRE_IMG={
+  Podzol:'Images/Podzol.png',
+  Gleysol:'Images/Gleysol.png',
+  Brunisol:'Images/Brunisol.png',
+  Organique:'Images/Organique.png',
 };
 
 const ORDRE_DESC={
@@ -146,7 +177,7 @@ const ca=document.getElementById('carea');
 const panel=document.getElementById('panel');
 const pbody=document.getElementById('pbody');
 const hl=document.getElementById('hlabel');
-const ab=document.getElementById('absent');
+const ab=document.getElementById('absent-search');
 
 function resize(){cv.width=ca.clientWidth;cv.height=ca.clientHeight;draw();}
 
@@ -183,6 +214,8 @@ function draw(){
   const sn=selected?nb(selected):null;
   const lk=new Set();
   if(sn)edges.forEach(e=>{if(e.src===selected)lk.add(e.tgt);if(e.tgt===selected)lk.add(e.src);});
+
+  // Arêtes
   edges.forEach(e=>{
     const a=nb(e.src),b=nb(e.tgt);
     if(!a||!b||!AS.has(a.id)||!AS.has(b.id))return;
@@ -192,6 +225,8 @@ function draw(){
     ctx.lineWidth=(h?1.8:.8)/T.k;
     ctx.setLineDash(h?[]:[4/T.k,3/T.k]);ctx.stroke();ctx.setLineDash([]);
   });
+
+  // Bulles
   nodes.forEach(n=>{
     if(!AS.has(n.id))return;
     const p=PAL[n.ordre]||PAL.Podzol;
@@ -208,13 +243,36 @@ function draw(){
     else if(n.special==='magique')star(n.x,n.y-n.r-7/T.k,5/T.k,'#8aacb0','#3d6f74');
     ctx.globalAlpha=1;
   });
-  [...new Set(DATA.map(d=>d.ordre))].forEach(o=>{
+
+  // Labels d'ordres — à l'extérieur des bulles, bien visibles
+  const ordreList=[...new Set(DATA.map(d=>d.ordre))];
+  ordreList.forEach(o=>{
     if(filterOrdre&&o!==filterOrdre)return;
-    const g=nodes.filter(n=>AS.has(n.id)&&n.ordre===o);if(!g.length)return;
-    const gx=d3.mean(g,n=>n.x),gy=d3.mean(g,n=>n.y)-d3.max(g,n=>n.r)-16/T.k;
-    ctx.globalAlpha=sn?.35:.8;ctx.font=`500 ${13/T.k}px 'Segoe UI',sans-serif`;
-    ctx.textAlign='center';ctx.fillStyle=(PAL[o]||PAL.Podzol).stroke;ctx.fillText(o+'s',gx,gy);ctx.globalAlpha=1;
+    const g=nodes.filter(n=>AS.has(n.id)&&n.ordre===o);
+    if(!g.length)return;
+    const p=PAL[o]||PAL.Podzol;
+    const gx=d3.mean(g,n=>n.x);
+    const gyMin=d3.min(g,n=>n.y-n.r);
+    const labelY=gyMin-22/T.k;
+    const labelFs=14/T.k;
+    ctx.globalAlpha=sn?.4:1;
+    // Fond semi-transparent derrière le label
+    ctx.font=`600 ${labelFs}px 'Segoe UI',sans-serif`;
+    const tw2=ctx.measureText(o+'s').width;
+    ctx.fillStyle='rgba(250,247,242,0.82)';
+    ctx.beginPath();
+    ctx.roundRect(gx-tw2/2-6/T.k, labelY-labelFs*.8, tw2+12/T.k, labelFs*1.5, 4/T.k);
+    ctx.fill();
+    ctx.strokeStyle=p.stroke;
+    ctx.lineWidth=1/T.k;
+    ctx.stroke();
+    // Texte
+    ctx.fillStyle=p.stroke;
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(o+'s',gx,labelY-labelFs*.05);
+    ctx.globalAlpha=1;
   });
+
   ctx.restore();
   document.getElementById('count').textContent=`${AS.size} série${AS.size!==1?'s':''}`;
 }
@@ -252,24 +310,26 @@ function openOrdrePanel(ordre){
   const count=DATA.filter(d=>d.ordre===ordre).length;
   let h=`<div class="pn">${ordre}s</div>`;
   h+=`<span class="pb" style="background:${p.light};color:${p.text}">Ordre pédologique</span>`;
-  h+=`<div class="pr" style="margin-bottom:10px">${count} série${count>1?'s':''} répertoriée${count>1?'s':''}</div>`;
+  h+=`<div class="pr" style="margin-bottom:8px">${count} série${count>1?'s':''} répertoriée${count>1?'s':''}</div>`;
+  if(ORDRE_IMG[ordre]){
+    h+=`<img src="${ORDRE_IMG[ordre]}" alt="Profil de sol — ${ordre}" class="ordre-img"/>`;
+    h+=`<div class="credit">© IRDA — Institut de recherche et de développement en agroenvironnement</div>`;
+  }
   h+=`<div class="psep"></div>`;
   h+=`<div class="ordre-desc">${ORDRE_DESC[ordre]||''}</div>`;
   pbody.innerHTML=h;
   panel.classList.add('show');
-  selected=null;
-  updateActive();
-  draw();
+  selected=null;updateActive();draw();
 }
 
 function closePanel(){panel.classList.remove('show');selected=null;updateActive();draw();}
 document.getElementById('px').addEventListener('click',closePanel);
 
-// Clics sur les ordres dans la légende
 document.querySelectorAll('.ordre-leg').forEach(el=>{
   el.addEventListener('click',()=>openOrdrePanel(el.dataset.ordre));
 });
 
+// Pan & zoom
 ca.addEventListener('mousedown',e=>{if(e.target!==cv)return;drag=true;ds={x:e.clientX,y:e.clientY};ts={...T};ca.classList.add('grab');});
 window.addEventListener('mousemove',e=>{
   if(drag){T.x=ts.x+(e.clientX-ds.x);T.y=ts.y+(e.clientY-ds.y);draw();return;}
@@ -322,12 +382,32 @@ document.getElementById('filter').addEventListener('change',e=>{filterOrdre=e.ta
 
 function buildSidebar(){
   const list=document.getElementById('slist');list.innerHTML='';
+  const ids=new Set(DATA.map(d=>d.id));
+
+  // Sols spéciaux
   const sp=DATA.filter(d=>d.special).sort((a,b)=>(a.special==='emblématique'?0:1)-(b.special==='emblématique'?0:1));
+  // Sols répertoriés normaux
   const rest=DATA.filter(d=>!d.special).sort((a,b)=>a.id.localeCompare(b.id,'fr'));
-  sp.forEach(d=>addItem(list,d));
+
+  sp.forEach(d=>addItem(list,d,false));
   if(sp.length&&rest.length){const s=document.createElement('div');s.className='sep';list.appendChild(s);}
-  rest.forEach(d=>addItem(list,d));
+  rest.forEach(d=>addItem(list,d,false));
+
+  // Sols non répertoriés (dans sim mais pas dans DATA)
+  const allSim=new Set();
+  DATA.forEach(d=>(d.sim||[]).forEach(s=>allSim.add(s)));
+  const absents=[...allSim].filter(s=>!ids.has(s)).sort((a,b)=>a.localeCompare(b,'fr'));
+  if(absents.length){
+    const sep=document.createElement('div');sep.className='sep';list.appendChild(sep);
+    const t=document.createElement('div');t.className='sec-title';t.textContent='Non répertoriés';list.appendChild(t);
+    absents.forEach(s=>{
+      const li=document.createElement('div');li.className='si si-absent';
+      li.innerHTML=`<div class="sdot" style="background:#ccc;border:1.5px solid #999"></div>${s}`;
+      list.appendChild(li);
+    });
+  }
 }
+
 function addItem(list,d){
   const p=PAL[d.ordre]||PAL.Podzol;
   const li=document.createElement('div');li.className='si';li.dataset.id=d.id;
