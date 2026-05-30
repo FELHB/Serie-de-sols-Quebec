@@ -140,6 +140,7 @@ const PAL={
 const SPECIAL_DESC={
   emblématique:`★ Sol emblématique du Québec\nLa série Sainte-Rosalie a été reconnue comme sol emblématique du Québec par l'Association québécoise de spécialistes en science du sol (AQSSS).`,
   magique:`✦ Sol magique\nLa série De L'Anse est appelée « sol magique » par les pédologues car c'est un argile qui draine comme un sable, due à sa structure particulière unique. Ce statut a été reconnu par Félix`,
+  sapin:`🎄 Sol sapin de Noël\nLe Mawcook est surnommé « Le sol sapin de Noël » car les fragments qui le compose sont d'une grande variété de couleurs (rouge, jaune, vert,...)`,
 };
 
 const ORDRE_IMG={
@@ -371,6 +372,7 @@ window.addEventListener('mousemove',e=>{
     let lbl=hit.id+' — '+hit.superficie.toLocaleString('fr-CA')+' ha';
     if(hit.special==='emblématique')lbl+=' ★ Sol emblématique';
     else if(hit.special==='magique')lbl+=' ✦ Sol magique';
+    else if(n.special==='sapin') star(n.x,n.y-n.r-7/T.k,5/T.k,'#2d6a2d','#1a4a1a');
     hl.textContent=lbl;hl.style.display='block';
   } else {cv.style.cursor='grab';hl.style.display='none';}
 });
@@ -443,6 +445,7 @@ function addItem(list,d){
   let badges='';
   if(d.special==='emblématique')badges+=`<span class="sb se">★</span>`;
   else if(d.special==='magique')badges+=`<span class="sb sm">✦</span>`;
+  else if(d.special==='sapin')badges+=`<span class="sb" style="background:#d4edda;color:#1a4a1a;border:1px solid #2d6a2d">🎄</span>`;
   const pdfIcon=d.pdf?`<span class="spdf" title="Fiche disponible">⛏</span>`:'';
   li.innerHTML=`<div class="sdot" style="background:${p.fill};border:1.5px solid ${p.stroke}"></div>${d.id}${badges}${pdfIcon}`;
   li.addEventListener('click',()=>{if(selected===d.id){closePanel();}else{selected=d.id;filterOrdre='';searchStr='';document.getElementById('filter').value='';document.getElementById('search').value='';ab.style.display='none';const n=nb(d.id);if(n)openPanel(n);updateActive();draw();}});
